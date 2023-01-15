@@ -1,8 +1,8 @@
-export default function Home() {
+export default function About() {
   return (
     <>
       <h1>
-        Hello World
+        About me!
       </h1>
     </>
   )
