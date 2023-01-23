@@ -1,5 +1,5 @@
 /* header image */
-header{
+header {
   @apply flex flex-wrap justify-center;
   @apply w-full;
 }
@@ -24,4 +24,16 @@ header #nav a {
 
 header #nav a:hover {
   @apply text-red-500;
+}
+
+/* COMIC Navigation Icons */
+
+.comicNav {
+  @apply flex flex-nowrap items-center content-center;
+  @apply mx-0 my-3;
+}
+
+.comicNav img {
+  @apply pr-8 lg:w-28;
+  @apply cursor-pointer;
 }

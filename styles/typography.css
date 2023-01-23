@@ -35,7 +35,6 @@
     url(../asset/fonts/regular/NotoSans-ExtraLightItalic.ttf) format('trueType');
 }
 
-
 @font-face {
   font-family: 'Noto Sans';
   font-style: normal;
@@ -62,7 +61,6 @@
   src: local('Noto Sans'),
     url(../asset/fonts/regular/NotoSans-Regular.ttf) format('trueType');
 }
-
 
 @font-face {
   font-family: 'Noto Sans';
@@ -247,5 +245,5 @@
 
 * {
   font-family: 'Noto Sans', sans-serif;
-  font-family: 'Noto Sans Arabic', sans-serif;
+  /* font-family: 'Noto Sans Arabic', sans-serif; */
 }
