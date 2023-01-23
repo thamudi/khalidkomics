@@ -44,3 +44,23 @@ export async function fetchAPI(path: string, urlParamsObject = {}, options = {})
   const data = await response.json();
   return data;
 }
+
+export function fetchAPIUrl(path: string, urlParamsObject = {}, options = {}) {
+  // Merge default and user options
+  const mergedOptions = {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    ...options,
+  };
+
+  // Build request URL
+  const queryString = qs.stringify(urlParamsObject);
+  const url =  `${getStrapiURL(
+    `/api${path}${queryString ? `?${queryString}` : ""}`
+  )}`;
+
+  console.log(url);
+  return url;
+  
+}
