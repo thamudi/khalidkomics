@@ -1,0 +1,39 @@
+/* header image */
+header {
+  @apply flex flex-wrap justify-center;
+  @apply w-full;
+}
+
+header .logo {
+  @apply w-80 my-4;
+  @apply max-w-full;
+}
+
+/* HEADER */
+header #nav {
+  @apply flex flex-wrap justify-center;
+  @apply bg-white;
+  @apply text-xl;
+  @apply min-w-full m-auto;
+  @apply outline-2 outline-black outline;
+}
+
+header #nav a {
+  @apply my-0 mx-4;
+}
+
+header #nav a:hover {
+  @apply text-red-500;
+}
+
+/* COMIC Navigation Icons */
+
+.comicNav {
+  @apply flex flex-nowrap items-center content-center;
+  @apply mx-0 my-3;
+}
+
+.comicNav img {
+  @apply pr-8 lg:w-28;
+  @apply cursor-pointer;
+}
