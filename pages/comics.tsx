@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Comic from '@/components/Comic';
 
 interface ComicData {

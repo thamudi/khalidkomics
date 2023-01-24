@@ -1,0 +1,19 @@
+.share-container {
+  @apply outline outline-black;
+  @apply m-auto p-1 pt-0 max-w-full;
+  width: 900px;
+  outline-width: 3px;
+}
+
+.share-links {
+  @apply flex w-full;
+  @apply pt-4 pb-1;
+}
+
+.share-links div {
+  @apply flex w-full justify-center;
+}
+
+.share-links img {
+  @apply cursor-pointer lg:w-24;
+}

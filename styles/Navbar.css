@@ -14,8 +14,10 @@ header #nav {
   @apply flex flex-wrap justify-center;
   @apply bg-white;
   @apply text-xl;
-  @apply min-w-full m-auto;
-  @apply outline-2 outline-black outline;
+  @apply m-auto;
+  @apply outline-black outline;
+  min-width: 98%;
+  outline-width: 3px;
 }
 
 header #nav a {
