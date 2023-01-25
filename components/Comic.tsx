@@ -5,16 +5,23 @@ import { ComicNav } from './ComicNav';
 import Share from './Share';
 
 const Comic = ({ comicData, fetchComic }: any) => {
-  const comic = comicData.data[0].attributes;
-  const comicMeta = comicData.meta.pagination;
+  const comic = comicData.data
+    ? comicData.data[0].attributes
+    : comicData.attributes;
+  const comicMeta = comicData.meta?.pagination;
   const image = getStrapiMedia({ data: comic.comic.data[0] });
 
   return (
     <div className="flex flex-col items-center mt-4">
       <h1 className="pb-2">{comic.title}</h1>
-      <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
+      {comicMeta && (
+        <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
+      )}
       <Image width={1000} height={600} alt={comic.slug} src={image} />
-      <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
+
+      {comicMeta && (
+        <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
+      )}
       <Share comic={comic.data} />
     </div>
   );
