@@ -17,7 +17,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
       {comicMeta && (
         <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
       )}
-      <Image width={1000} height={600} alt={comic.slug} src={image} />
+      <Image width={500} height={600} alt={comic.slug} src={image} />
 
       {comicMeta && (
         <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />

@@ -8,8 +8,8 @@ export default function Navbar() {
         <Link href="/">
           <Image
             className="logo"
-            width={500}
-            height={500}
+            width={300}
+            height={300}
             src="/img/site_icons_logo_full.svg"
             alt=""
           />
@@ -19,8 +19,8 @@ export default function Navbar() {
       <nav id="nav">
         <Link href="/comics">
           <Image
-            width={100}
-            height={100}
+            width={90}
+            height={90}
             src="/img/nav/icons_comics_en.svg"
             alt="comics"
           />
@@ -28,8 +28,8 @@ export default function Navbar() {
         |
         <Link href="/archive">
           <Image
-            width={100}
-            height={100}
+            width={90}
+            height={90}
             src="/img/nav/icons_comics_en.svg"
             alt="archive comics"
           />
@@ -37,8 +37,8 @@ export default function Navbar() {
         |
         <Link href="/about">
           <Image
-            width={100}
-            height={100}
+            width={90}
+            height={90}
             src="/img/nav/icons_about_en.svg"
             alt="about khalid komics"
           />
@@ -46,8 +46,8 @@ export default function Navbar() {
         |
         <Link href="/contact">
           <Image
-            width={100}
-            height={100}
+            width={90}
+            height={90}
             src="/img/nav/icons_contact_en.svg"
             alt="contact khalid komics"
           />
@@ -55,8 +55,8 @@ export default function Navbar() {
         |
         <Link href="https://khalidkomics.secure-decoration.com/">
           <Image
-            width={100}
-            height={100}
+            width={90}
+            height={90}
             src="/img/nav/icons_store_en.svg"
             alt="khalid komics store"
           />

@@ -1,7 +1,7 @@
 .share-container {
   @apply outline outline-black;
   @apply m-auto p-1 pt-0 max-w-full;
-  width: 900px;
+  @apply w-full;
   outline-width: 3px;
 }
 
@@ -15,5 +15,5 @@
 }
 
 .share-links img {
-  @apply cursor-pointer lg:w-24;
+  @apply cursor-pointer lg:w-20;
 }

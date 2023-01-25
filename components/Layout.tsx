@@ -29,7 +29,7 @@ export default function Layout({ children }: LayoutProps) {
       <header>
         <Navbar />
       </header>
-      <main className="">{children}</main>
+      <main>{children}</main>
       <footer>
         <Footer />
       </footer>
