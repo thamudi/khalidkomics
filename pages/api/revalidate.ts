@@ -19,8 +19,13 @@ export default async function handler(
     switch (model) {
       case 'about':
         pathToRevalidate = `about`;
+        break;
+      case 'archive':
+        pathToRevalidate = `/archive/${slug}`;
+        break;
       case 'comics':
         pathToRevalidate = `/comics/${slug}`;
+        break;
       default:
         break;
     }

@@ -1,9 +1,7 @@
 import Layout from '@/components/Layout';
 import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
-import { useEffect, useState } from 'react';
 import { default as ComicComponent } from '@/components/Comic';
-import { NextApiResponse } from 'next';
 
 const Comic = ({ comicSeo, comic }: any) => {
   return (
@@ -49,32 +47,23 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }: any) {
   // Run API calls in parallel
 
-  const comicSeoResponse = await fetchAPI('/seo', {
-    populate: ['seo', 'seo.metaImage', 'seo.metaSocial'],
-  });
+  const [comicSeoResponse, comicResponse] = await Promise.all([
+    fetchAPI('/seo', {
+      populate: 'deep',
+    }),
+    fetch(
+      fetchAPIUrl(`/comics/${params.id}`, {
+        populate: 'deep',
+      })
+    ),
+  ]);
 
-  const comicResponse = await fetch(
-    fetchAPIUrl(`/comics/${params.id}`, {
-      populate: '*',
-    })
-  );
-  const comicJson = await comicResponse.json();
-
-  // const [comicSeoResponse, comicResponse] = await Promise.all([
-  //   fetchAPI('/seo', {
-  //     populate: ['seo', 'seo.metaImage', 'seo.metaSocial'],
-  //   }),
-  //   fetch(
-  //     fetchAPIUrl(`/comics/${params.id}`, {
-  //       populate: '*',
-  //     })
-  //   ),
-  // ]);
+  const jsonResponse = await comicResponse.json();
 
   return {
     props: {
       comicSeo: comicSeoResponse.data,
-      comic: comicJson.data,
+      comic: jsonResponse.data,
     },
   };
 }
