@@ -17,6 +17,8 @@ export default async function handler(
     let pathToRevalidate = '';
 
     switch (model) {
+      case 'about':
+        pathToRevalidate = `about`;
       case 'comics':
         pathToRevalidate = `/comics/${slug}`;
       default:

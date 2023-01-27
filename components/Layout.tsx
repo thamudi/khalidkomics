@@ -29,7 +29,7 @@ export default function Layout({ children }: LayoutProps) {
       <header>
         <Navbar />
       </header>
-      <main>{children}</main>
+      <main className="mt-4">{children}</main>
       <footer>
         <Footer />
       </footer>

@@ -16,7 +16,7 @@ header #nav {
   @apply text-xl;
   @apply m-auto;
   @apply outline-black outline;
-  min-width: 98%;
+  width: 98%;
   outline-width: 3px;
 }
 

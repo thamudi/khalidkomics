@@ -1,9 +1,52 @@
-export default function About() {
+import Layout from '@/components/Layout';
+import Seo from '@/components/Seo';
+import { fetchAPI } from '@/lib/api';
+import Link from 'next/link';
+import Image from 'next/image';
+import { getStrapiMedia } from '@/lib/media';
+
+export default function About({ about }: any) {
+  const image = getStrapiMedia(about.attributes.ImageBanner);
   return (
-    <>
-      <h1>
-        About me!
-      </h1>
-    </>
-  )
+    <Layout>
+      <div className="flex flex-col items-center">
+        {about?.attributes && (
+          <>
+            <Seo seo={about.attributes.seo} />
+            <div className="subPage">
+              <h1 className="text-center font-bold mt-4">
+                {about.attributes.AboutTitle}
+              </h1>
+              <div className="wrapper">
+                <Image
+                  width={500}
+                  height={600}
+                  alt={`${about.attributes.AboutTitle} image`}
+                  src={image}
+                />
+                <div id="authorBlurb">
+                  <p className="mt-4">{about.attributes.Content}</p>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+      </div>
+    </Layout>
+  );
+}
+
+export async function getStaticProps() {
+  // Run API calls in parallel
+  const [aboutPageResponse] = await Promise.all([
+    fetchAPI('/about', {
+      populate: 'deep',
+    }),
+  ]);
+
+  return {
+    props: {
+      about: aboutPageResponse.data,
+    },
+  };
 }

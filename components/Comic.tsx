@@ -12,7 +12,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
   const image = getStrapiMedia({ data: comic.comic.data[0] });
 
   return (
-    <div className="flex flex-col items-center mt-4">
+    <div className="flex flex-col items-center">
       <h1 className="pb-2">{comic.title}</h1>
       {comicMeta && (
         <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />

@@ -9,6 +9,8 @@
 @import url('./Navbar.css');
 /* Footer */
 @import url('./Share.css');
+/* About page */
+@import url('./about.css');
 /* Comic Component */
 @import url('./Comic.css');
 

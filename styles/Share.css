@@ -1,7 +1,7 @@
 .share-container {
   @apply outline outline-black;
-  @apply m-auto p-1 pt-0 max-w-full;
-  @apply w-full;
+  @apply m-auto p-1 pt-0;
+  width: 98%;
   outline-width: 3px;
 }
 
