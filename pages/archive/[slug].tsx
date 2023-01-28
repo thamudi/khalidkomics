@@ -73,7 +73,6 @@ export async function getStaticPaths() {
 ///
 export async function getStaticProps({ params }: any) {
   // Run API calls in parallel
-  console.log(params);
 
   const [archivesSeoResponse, archivesResponse] = await Promise.all([
     fetchAPI('/seo', {
@@ -88,7 +87,6 @@ export async function getStaticProps({ params }: any) {
   ]);
 
   const archivesJson = await archivesResponse.json();
-  console.log(archivesJson);
 
   return {
     props: {
