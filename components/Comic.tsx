@@ -22,7 +22,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
       {comicMeta && (
         <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
       )}
-      <Share comic={comic.data} />
+      <Share comicId={comicMeta ? comicData.data[0].id : null} />
     </div>
   );
 };
