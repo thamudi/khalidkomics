@@ -12,6 +12,7 @@ export default function Navbar() {
             height={300}
             src="/img/site_icons_logo_full.svg"
             alt=""
+            priority
           />
         </Link>
       </div>
