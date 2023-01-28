@@ -1,7 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useRef, useState } from 'react';
 
 export default function Navbar() {
+  const [scroll, setScroll] = useState(false);
+  const itemNode: any = useRef(null);
+
+  useEffect(() => {
+    window.addEventListener('scroll', () => {
+      //TODO: make this transition smoother
+      setScroll(window.pageYOffset > itemNode.current.offsetTop);
+    });
+  }, []);
+
   return (
     <header>
       <div>
@@ -17,7 +28,7 @@ export default function Navbar() {
         </Link>
       </div>
 
-      <nav id="nav">
+      <nav id="nav" ref={itemNode} className={scroll ? 'fixed top-0' : ''}>
         <Link href="/comics">
           <Image
             width={90}

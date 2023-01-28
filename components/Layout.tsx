@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { ReactNode } from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';
+import Search from './Search';
 
 type LayoutProps = {
   readonly children: ReactNode;
@@ -30,6 +31,8 @@ export default function Layout({ children }: LayoutProps) {
         <Navbar />
       </header>
       <main className="mt-4">{children}</main>
+      {/* TODO: ask about keeping this or not */}
+      {/* <Search /> */}
       <footer>
         <Footer />
       </footer>
