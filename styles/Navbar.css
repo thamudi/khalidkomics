@@ -24,6 +24,13 @@ header #nav img {
   @apply lg:w-28;
 }
 
+header #nav img:hover {
+  animation-duration: 666ms;
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-name: wiggle;
+}
+
 header #nav a {
   @apply my-0 mx-4;
 }

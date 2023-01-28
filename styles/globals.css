@@ -3,6 +3,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Animation */
+@import url('./animate.css');
 /* Typography */
 @import url('./typography.css');
 /* Navbar */
