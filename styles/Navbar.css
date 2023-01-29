@@ -25,7 +25,7 @@ header #nav img {
 }
 
 header #nav img:hover {
-  animation-duration: 666ms;
+  animation-duration: 666ms; /** 🤘🤘 **/
   animation-timing-function: linear;
   animation-iteration-count: 1;
   animation-name: wiggle;

@@ -19,7 +19,7 @@ const Comics = ({ comicSeo }: any) => {
     fetch(
       fetchAPIUrl('/comics', {
         populate: '*',
-        'filters[archive][slug][$eq]': new Date().getFullYear() - 1,
+        'filters[archive][slug][$eq]': new Date().getFullYear(),
         'pagination[pageSize]': 1,
         'pagination[page]': pageNumber,
       })
