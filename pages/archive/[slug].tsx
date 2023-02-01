@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
-import { getStrapiMedia, getStrapiThumbnailMedia } from '@/lib/media';
+import { getStrapiMedia } from '@/lib/media';
 import Image from 'next/image';
 import Link from 'next/link';
 
