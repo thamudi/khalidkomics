@@ -18,10 +18,6 @@ const Comic = ({ comicData, fetchComic }: any) => {
         <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
       )}
       <Image width={500} height={600} alt={comic.slug} src={image} />
-
-      {comicMeta && (
-        <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
-      )}
       <Share comicId={comicMeta ? comicData.data[0].id : null} />
     </div>
   );
