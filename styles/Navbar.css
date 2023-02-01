@@ -43,7 +43,7 @@ header #nav a:hover {
 
 .comicNav {
   @apply flex flex-nowrap items-center content-center;
-  @apply mx-0 my-3;
+  @apply mx-auto my-3;
 }
 
 .comicNav img {

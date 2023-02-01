@@ -1,8 +1,7 @@
 import Layout from '@/components/Layout';
+import Media from '@/components/Media';
 import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
-import { getStrapiMedia } from '@/lib/media';
-import Image from 'next/image';
 import Link from 'next/link';
 
 const ArchiveList = ({ archivesSeo, archive, comics, slug }: any) => {
@@ -20,13 +19,14 @@ const ArchiveList = ({ archivesSeo, archive, comics, slug }: any) => {
                   <Link
                     href={`/comics/${comic.id}`}
                     className="flex items-center my-4 outline p-4"
+                    key={comic.id}
                   >
-                    <Image
-                      src={getStrapiMedia(comic.attributes.thumbnail)}
-                      alt={comic.attributes.title}
+                    <Media
+                      media={comic.attributes.thumbnail}
+                      title={comic.attributes.title}
                       width={100}
                       height={100}
-                      className="rounded-full object-cover mr-5"
+                      className={'thumbnail'}
                     />
                     <h3>{comic.attributes.title}</h3>
                   </Link>

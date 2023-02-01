@@ -14,20 +14,32 @@ const Comics = ({ comicSeo }: any) => {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   //TODO: Check if SWR is a better fit
-  const fetchComic = (pageNumber: number = 1) => {
+  const fetchComic = (
+    pageNumber: number = 1,
+    previousYear: boolean = false,
+    numberOfYears: number = 0
+  ) => {
     setLoading(true);
     fetch(
       fetchAPIUrl('/comics', {
         populate: '*',
-        'filters[archive][slug][$eq]': new Date().getFullYear(),
+        'sort[0]': 'releaseDate:desc',
+        'filters[archive][slug][$eq]': previousYear
+          ? new Date().getFullYear() - numberOfYears
+          : new Date().getFullYear(),
         'pagination[pageSize]': 1,
         'pagination[page]': pageNumber,
       })
     )
       .then((res) => res.json())
       .then((data) => {
-        setComic(data);
-        setLoading(false);
+        console.log(data);
+        if (data.data.length) {
+          setComic(data);
+          setLoading(false);
+        } else {
+          fetchComic(pageNumber, true, numberOfYears + 1);
+        }
       });
   };
 

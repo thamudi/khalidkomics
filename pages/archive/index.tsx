@@ -46,7 +46,9 @@ export async function getStaticProps() {
     fetchAPI('/seo', {
       populate: ['deep'],
     }),
-    fetchAPI('/archives'),
+    fetchAPI('/archives', {
+      'sort[0]': 'title:desc',
+    }),
   ]);
 
   return {

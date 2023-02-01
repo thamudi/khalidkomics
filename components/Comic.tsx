@@ -1,8 +1,8 @@
 import { getStrapiMedia } from '@/lib/media';
 import React from 'react';
-import Image from 'next/image';
 import { ComicNav } from './ComicNav';
 import Share from './Share';
+import Media from './Media';
 
 const Comic = ({ comicData, fetchComic }: any) => {
   const comic = comicData.data
@@ -17,7 +17,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
       {comicMeta && (
         <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
       )}
-      <Image width={500} height={600} alt={comic.slug} src={image} />
+      <Media media={image} title={comic.title} width={500} height={600} />
       <Share comicId={comicMeta ? comicData.data[0].id : null} />
     </div>
   );

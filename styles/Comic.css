@@ -2,3 +2,7 @@
   /* width: 900px;
   max-width: 98%; */
 }
+
+.thumbnail {
+  @apply rounded-full object-cover mr-5;
+}
