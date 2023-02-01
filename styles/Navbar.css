@@ -42,11 +42,11 @@ header #nav a:hover {
 /* COMIC Navigation Icons */
 
 .comicNav {
-  @apply flex flex-nowrap items-center content-center;
+  @apply flex items-center;
   @apply mx-auto my-3;
 }
 
 .comicNav img {
-  @apply pr-8 lg:w-28;
+  @apply px-4 lg:w-28;
   @apply cursor-pointer;
 }
