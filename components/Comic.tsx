@@ -17,7 +17,11 @@ const Comic = ({ comicData, fetchComic }: any) => {
     <div className="flex flex-col items-center">
       <h1 className="pb-2">{comic.title}</h1>
       {comicMeta && (
-        <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
+        <ComicNav
+          comicMetaData={comicMeta}
+          fetchComic={fetchComic}
+          search={false}
+        />
       )}
       {images.map((image: string) => (
         <Media media={image} title={comic.title} width={500} height={600} />
