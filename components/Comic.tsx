@@ -3,6 +3,7 @@ import React from 'react';
 import { ComicNav } from './ComicNav';
 import Share from './Share';
 import Media from './Media';
+import ComicFootnote from './ComicFootnote';
 
 const Comic = ({ comicData, fetchComic }: any) => {
   const comic = comicData.data
@@ -18,6 +19,9 @@ const Comic = ({ comicData, fetchComic }: any) => {
         <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
       )}
       <Media media={image} title={comic.title} width={500} height={600} />
+      {comic.authorsNote?.length && (
+        <ComicFootnote authorsNote={comic.authorsNote} />
+      )}
       <Share comicId={comicMeta ? comicData.data[0].id : null} />
     </div>
   );

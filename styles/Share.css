@@ -1,7 +1,9 @@
-.share-container {
+.share-container,
+.footnote-container {
   @apply outline outline-black;
   @apply m-auto p-1 pt-0;
   width: 98%;
+  max-width: 490px;
   outline-width: 3px;
 }
 
