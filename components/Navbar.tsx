@@ -10,10 +10,8 @@ interface NavigationItems {
 }
 
 export default function Navbar() {
-  const [scroll, setScroll] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [toggleNav, setToggleNav] = useState(false);
-  const itemNode: any = useRef(null);
 
   const items = [
     {
@@ -26,21 +24,21 @@ export default function Navbar() {
       alt: 'about khalid komics',
       link: '/about',
     },
-    // {
-    //   src: '/img/nav/icons_contact_en.svg',
-    //   alt: 'contact khalid komics',
-    //   link: '/contact',
-    // },
+    {
+      src: '/img/nav/icons_contact_en.svg',
+      alt: 'contact khalid komics',
+      link: '/contact',
+    },
     {
       src: '/img/nav/icons_store_en.svg',
       alt: 'khalid komics store',
       link: 'https://khalidkomics.secure-decoration.com/',
     },
-    // {
-    //   src: '/img/icons/icons_lang_ar_2.svg',
-    //   alt: 'switch ar',
-    //   link: '#',
-    // },
+    {
+      src: '/img/icons/icons_lang_ar_2.svg',
+      alt: 'switch ar',
+      link: '#',
+    },
   ];
 
   useEffect(() => {

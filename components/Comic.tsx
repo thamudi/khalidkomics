@@ -23,8 +23,14 @@ const Comic = ({ comicData, fetchComic }: any) => {
           search={false}
         />
       )}
-      {images.map((image: string) => (
-        <Media media={image} title={comic.title} width={500} height={600} />
+      {images.map((image: string, i: number) => (
+        <Media
+          key={i}
+          media={image}
+          title={comic.title}
+          width={500}
+          height={600}
+        />
       ))}
       {comic.authorsNote?.length && (
         <ComicFootnote authorsNote={comic.authorsNote} />
