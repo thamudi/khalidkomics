@@ -1,5 +1,4 @@
 import { LinkCreator } from '@/lib/LinkCreator';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 
 const Search = () => {
@@ -16,16 +15,6 @@ const Search = () => {
     );
   };
   return (
-    // <div className="fixed bottom-16 right-5">
-    //   <div className="">
-    //     <Image
-    //       src={'/img/icons/icons_search.svg'}
-    //       alt={'search icon'}
-    //       width={65}
-    //       height={65}
-    //     />
-    //   </div>
-    // </div>
     <div id="search">
       <form onSubmit={searchComic}>
         <input name="searchtext" type="text" />
