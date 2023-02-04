@@ -29,7 +29,7 @@ const Search = () => {
     <div id="search">
       <form onSubmit={searchComic}>
         <input name="searchtext" type="text" />
-        <input type="submit" value="Search!" />
+        <input type="submit" value="Submit!" />
       </form>
     </div>
   );
