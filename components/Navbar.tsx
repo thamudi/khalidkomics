@@ -59,9 +59,12 @@ export default function Navbar() {
       }
     });
   });
+  const triggerNav = () => {
+    setToggleNav(!toggleNav);
+  };
   return (
     <header>
-      <div>
+      <div className="flex w-full md:justify-center">
         <Link href="/">
           <Image
             className="logo"
@@ -72,6 +75,16 @@ export default function Navbar() {
             priority
           />
         </Link>
+        {isMobile && (
+          <Image
+            className="animate-wiggle"
+            width={80}
+            height={80}
+            src="/img/nav/burgur.svg"
+            alt=""
+            onClick={triggerNav}
+          />
+        )}
       </div>
       {isMobile ? (
         <MobileNav
@@ -107,32 +120,13 @@ const DesktopNav = ({ navItems }: any) => {
   );
 };
 
-const MobileNav = ({ toggleNav, setToggleNav, navItems }: any) => {
-  const triggerNav = () => {
-    setToggleNav(!toggleNav);
-  };
-
-  const closeNav = () => setToggleNav(false);
-
+const MobileNav = ({ toggleNav, navItems }: any) => {
   return (
     <>
-      <Image
-        className="nav-expand animate-wiggle"
-        width={80}
-        height={80}
-        src="/img/nav/burgur.svg"
-        alt=""
-        onClick={triggerNav}
-      />
-
       <div
-        id="mySidenav"
-        className="sidenav"
+        className={`mobileNav ${toggleNav ? 'toggle' : ''}`}
         style={{ width: toggleNav ? `100%` : `0` }}
       >
-        <a href="javascript:void(0)" className="closebtn" onClick={closeNav}>
-          &times;
-        </a>
         {navItems.map((item: NavigationItems, i: number) => {
           return (
             <Link key={item.alt} href={item.link}>
