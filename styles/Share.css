@@ -1,7 +1,7 @@
 .share-container,
 .footnote-container {
   /* @apply border-solid border-black; */
-  @apply m-auto p-1 pt-0;
+  @apply m-auto p-1 pt-0 mt-9;
   width: 98%;
   max-width: 490px;
   /* border-width: 3px; */

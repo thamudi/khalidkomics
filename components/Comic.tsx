@@ -4,6 +4,7 @@ import { ComicNav } from './ComicNav';
 import Share from './Share';
 import Media from './Media';
 import ComicFootnote from './ComicFootnote';
+import Slider from './Slider';
 
 const Comic = ({ comicData, fetchComic }: any) => {
   const comic = comicData.data
@@ -23,15 +24,22 @@ const Comic = ({ comicData, fetchComic }: any) => {
           search={false}
         />
       )}
-      {images.map((image: string, i: number) => (
-        <Media
-          key={i}
-          media={image}
-          title={comic.title}
-          width={500}
-          height={600}
-        />
-      ))}
+      {images.length > 1 ? (
+        <Slider images={images} />
+      ) : (
+        <>
+          {images.map((image: string, i: number) => (
+            <Media
+              key={i}
+              media={image}
+              title={comic.title}
+              width={500}
+              height={600}
+            />
+          ))}
+        </>
+      )}
+
       {comic.authorsNote?.length && (
         <ComicFootnote authorsNote={comic.authorsNote} />
       )}
