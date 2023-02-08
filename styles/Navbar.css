@@ -1,21 +1,67 @@
 /* header image */
 header {
-  @apply flex flex-wrap justify-center;
+  @apply flex flex-wrap justify-between md:justify-center;
   @apply w-full;
 }
 
 header .logo {
-  @apply w-80 my-4;
+  @apply lg:w-96 my-4;
   @apply max-w-full;
 }
 
 /* HEADER */
-header #nav {
-  @apply flex flex-wrap justify-center;
+
+header #nav,
+#search {
+  @apply flex flex-wrap justify-center items-center;
   @apply bg-white;
   @apply text-xl;
-  @apply min-w-full m-auto;
-  @apply outline-2 outline-black outline;
+  @apply m-auto;
+  @apply outline-black outline;
+  width: 98%;
+  outline-width: 3px;
+}
+
+#search {
+  @apply mt-4 p-4;
+}
+
+#search form {
+  @apply flex justify-between items-end;
+  @apply w-full;
+}
+
+#search input[type='text'] {
+  @apply w-full;
+  @apply border-b border-black mx-8;
+  border-bottom-width: 3px;
+  padding: 12px 20px;
+}
+
+#search input[type='text']:focus {
+  @apply outline-none;
+  @apply border-b border-red-700;
+  border-bottom-width: 3px;
+  padding: 12px 20px;
+}
+
+#search input[type='submit'] {
+  background-image: url('../public/img/icons/icons_search.svg');
+  background-repeat: no-repeat;
+  color: transparent;
+  height: 50px;
+}
+
+header #nav img {
+  @apply lg:w-28;
+}
+
+header #nav img:hover,
+.animate-wiggle:hover {
+  animation-duration: 666ms; /** 🤘🤘 **/
+  animation-timing-function: linear;
+  animation-iteration-count: 1;
+  animation-name: wiggle;
 }
 
 header #nav a {
@@ -29,11 +75,23 @@ header #nav a:hover {
 /* COMIC Navigation Icons */
 
 .comicNav {
-  @apply flex flex-nowrap items-center content-center;
-  @apply mx-0 my-3;
+  @apply flex items-center;
+  @apply mx-auto my-3;
 }
 
 .comicNav img {
-  @apply pr-8 lg:w-28;
+  @apply px-4 lg:w-28;
   @apply cursor-pointer;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  width: 0;
+  justify-content: space-around;
+}
+
+.mobileNav.toggle {
+  width: 100;
+  height: 300px;
 }

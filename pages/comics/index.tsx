@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Comic from '@/components/Comic';
 
 interface ComicData {
@@ -14,20 +14,31 @@ const Comics = ({ comicSeo }: any) => {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   //TODO: Check if SWR is a better fit
-  const fetchComic = (pageNumber: number = 1) => {
+  const fetchComic = (
+    pageNumber: number = 1,
+    previousYear: boolean = false,
+    numberOfYears: number = 0
+  ) => {
     setLoading(true);
     fetch(
       fetchAPIUrl('/comics', {
         populate: '*',
-        'filters[archive][slug][$eq]': new Date().getFullYear() - 1,
+        'sort[0]': 'releaseDate:desc',
+        'filters[archive][slug][$eq]': previousYear
+          ? new Date().getFullYear() - numberOfYears
+          : new Date().getFullYear(),
         'pagination[pageSize]': 1,
         'pagination[page]': pageNumber,
       })
     )
       .then((res) => res.json())
       .then((data) => {
-        setComic(data);
-        setLoading(false);
+        if (data.data.length) {
+          setComic(data);
+          setLoading(false);
+        } else {
+          fetchComic(pageNumber, true, numberOfYears + 1);
+        }
       });
   };
 
@@ -59,7 +70,7 @@ export async function getStaticProps() {
   // Run API calls in parallel
   const [comicSeoResponse] = await Promise.all([
     fetchAPI('/seo', {
-      populate: ['seo', 'seo.metaImage', 'seo.metaSocial'],
+      populate: ['deep'],
     }),
   ]);
 

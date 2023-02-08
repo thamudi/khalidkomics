@@ -1,13 +1,13 @@
-import qs from "qs";
+import qs from 'qs';
 
 /**
  * Get full Strapi URL from path
  * @param {string} path Path of the URL
  * @returns {string} Full Strapi URL
  */
-export function getStrapiURL(path = "") {
+export function getStrapiURL(path = '') {
   return `${
-    process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
+    process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337'
   }${path}`;
 }
 
@@ -18,11 +18,15 @@ export function getStrapiURL(path = "") {
  * @param {Object} options Options passed to fetch
  * @returns Parsed API call response
  */
-export async function fetchAPI(path: string, urlParamsObject = {}, options = {}) {
+export async function fetchAPI(
+  path: string,
+  urlParamsObject = {},
+  options = {}
+) {
   // Merge default and user options
   const mergedOptions = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     ...options,
   };
@@ -30,9 +34,9 @@ export async function fetchAPI(path: string, urlParamsObject = {}, options = {})
   // Build request URL
   const queryString = qs.stringify(urlParamsObject);
   const requestUrl = `${getStrapiURL(
-    `/api${path}${queryString ? `?${queryString}` : ""}`
+    `/api${path}${queryString ? `?${queryString}` : ''}`
   )}`;
-  
+
   // Trigger API call
   const response = await fetch(requestUrl, mergedOptions);
 
@@ -49,18 +53,17 @@ export function fetchAPIUrl(path: string, urlParamsObject = {}, options = {}) {
   // Merge default and user options
   const mergedOptions = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     ...options,
   };
 
   // Build request URL
   const queryString = qs.stringify(urlParamsObject);
-  const url =  `${getStrapiURL(
-    `/api${path}${queryString ? `?${queryString}` : ""}`
+  const url = `${getStrapiURL(
+    `/api${path}${queryString ? `?${queryString}` : ''}`
   )}`;
 
-  console.log(url);
+  console.log('Fetch URL: ', url);
   return url;
-  
 }

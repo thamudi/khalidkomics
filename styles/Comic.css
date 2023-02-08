@@ -1,4 +1,36 @@
 .comicPage img {
-  width: 900px;
-  max-width: 98%;
+  /* width: 900px;
+  max-width: 98%; */
+}
+
+.thumbnail {
+  @apply rounded-full object-cover mr-5;
+}
+
+.slider.awssld {
+  --slider-height-percentage: 60%;
+  --slider-transition-duration: 200ms;
+  --organic-arrow-thickness: 4px;
+  --organic-arrow-border-radius: 0px;
+  --organic-arrow-height: 40px;
+  --organic-arrow-color: #b7b7b7;
+  --control-button-width: 6%;
+  --control-button-height: 25%;
+  --control-button-background: transparent;
+  --control-bullet-color: #888888;
+  --control-bullet-active-color: #d5d5d5;
+  --loader-bar-color: transparent;
+  --loader-bar-height: 1px;
+  /* width: 500px; */
+  height: 600px;
+}
+
+.slider .awssld__content {
+  background-color: transparent;
+}
+
+@media (min-width: 1024px) {
+  .lg\:w-full {
+    width: 500;
+  }
 }
