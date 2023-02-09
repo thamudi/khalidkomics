@@ -26,6 +26,10 @@ header #nav,
   border-radius: 40px;
 }
 
+header #nav {
+  @apply mb-4;
+}
+
 #search {
   @apply m-4 py-4 pb-8;
   @apply bg-transparent;
@@ -88,7 +92,8 @@ header #nav a {
 }
 
 .comicNav img {
-  @apply px-4 lg:w-28;
+  /* 12rem */
+  @apply px-4 lg:w-48;
   @apply cursor-pointer;
 }
 

@@ -10,7 +10,7 @@ const nextConfig = {
   // },
   images: {
     loader: "default",
-    domains: ["localhost"],
+    domains: ["localhost", "192.168.1.49"],
   },
 }
 

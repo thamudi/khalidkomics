@@ -19,13 +19,6 @@ const Comic = ({ comicData, fetchComic }: any) => {
     <div className="flex flex-col items-center">
       <h1 className="pb-2">{comic.title}</h1>
       <Search />
-      {comicMeta && (
-        <ComicNav
-          comicMetaData={comicMeta}
-          fetchComic={fetchComic}
-          search={false}
-        />
-      )}
       {images.length > 1 ? (
         <Slider images={images} />
       ) : (
@@ -41,7 +34,13 @@ const Comic = ({ comicData, fetchComic }: any) => {
           ))}
         </>
       )}
-
+      {comicMeta && (
+        <ComicNav
+          comicMetaData={comicMeta}
+          fetchComic={fetchComic}
+          search={false}
+        />
+      )}
       {comic.authorsNote?.length && (
         <ComicFootnote authorsNote={comic.authorsNote} />
       )}

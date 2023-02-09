@@ -24,7 +24,7 @@ export const ComicNav = ({
     <div className="comicNav">
       {comicMetaData.page < finalPage && (
         <>
-          <div>
+          {/* <div>
             <Image
               width={90}
               height={500}
@@ -32,10 +32,10 @@ export const ComicNav = ({
               src="/img/icons/icons_arrow_first.svg"
               onClick={() => fetchComic(finalPage)}
             />
-          </div>
+          </div> */}
           <div>
             <Image
-              width={90}
+              width={190}
               height={500}
               alt={'nav_previous'}
               src="/img/icons/icons_arrow_previous.svg"
@@ -48,14 +48,14 @@ export const ComicNav = ({
         <>
           <div>
             <Image
-              width={90}
+              width={190}
               height={500}
               alt={'nav_next'}
               src="/img/icons/icons_arrow_next.svg"
               onClick={() => fetchComic(comicMetaData.page - 1)}
             />
           </div>
-          <div>
+          {/* <div>
             <Image
               width={90}
               height={500}
@@ -63,7 +63,7 @@ export const ComicNav = ({
               src="/img/icons/icons_arrow_last.svg"
               onClick={() => fetchComic(finalPage - (finalPage - 1))}
             />
-          </div>
+          </div> */}
         </>
       )}
     </div>
