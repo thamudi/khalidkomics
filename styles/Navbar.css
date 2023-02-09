@@ -58,6 +58,7 @@ header #nav,
   background-image: url('../public/img/icons/icons_search.svg');
   @apply bg-no-repeat bg-center text-transparent;
   @apply absolute;
+  @apply cursor-pointer;
   right: 0.15rem;
   top: 0.15rem;
   background-size: 2.75rem;
