@@ -51,7 +51,7 @@ export default function Navbar() {
 
   useEffect(() => {
     window.addEventListener('resize', (e: any) => {
-      if (e.currentTarget.innerWidth < 645) {
+      if (e.currentTarget.innerWidth < 768) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
@@ -64,13 +64,13 @@ export default function Navbar() {
   };
   return (
     <header>
-      <div className="flex w-full md:justify-center">
+      <div className="flex w-full justify-between md:justify-center mx-4">
         <Link href="/">
           <Image
-            className="logo"
-            width={300}
-            height={300}
-            src="/img/site_icons_logo_full.svg"
+            className="logo "
+            width={200}
+            height={200}
+            src="/img/site_icons_logo_full_white.svg"
             alt=""
             priority
           />
@@ -78,9 +78,9 @@ export default function Navbar() {
         {isMobile && (
           <Image
             className="animate-wiggle"
-            width={80}
-            height={80}
-            src="/img/nav/burgur.svg"
+            width={45}
+            height={45}
+            src="/img/nav/hamburger.svg"
             alt=""
             onClick={triggerNav}
           />
