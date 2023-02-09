@@ -5,6 +5,7 @@ import Share from './Share';
 import Media from './Media';
 import ComicFootnote from './ComicFootnote';
 import Slider from './Slider';
+import Search from './Search';
 
 const Comic = ({ comicData, fetchComic }: any) => {
   const comic = comicData.data
@@ -17,6 +18,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
   return (
     <div className="flex flex-col items-center">
       <h1 className="pb-2">{comic.title}</h1>
+      <Search />
       {comicMeta && (
         <ComicNav
           comicMetaData={comicMeta}

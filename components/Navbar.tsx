@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import Search from './Search';
 
 interface NavigationItems {
   src: string;
@@ -95,7 +94,6 @@ export default function Navbar() {
       ) : (
         <DesktopNav navItems={items} />
       )}
-      <Search />
     </header>
   );
 }

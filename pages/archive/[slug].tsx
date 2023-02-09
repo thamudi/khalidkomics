@@ -1,5 +1,6 @@
 import Layout from '@/components/Layout';
 import Media from '@/components/Media';
+import Search from '@/components/Search';
 import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
 import Link from 'next/link';
@@ -11,6 +12,7 @@ const ArchiveList = ({ archivesSeo, archive, comics, slug }: any) => {
         {archivesSeo?.attributes && <Seo seo={archivesSeo.attributes.seo} />}
         <div className="flex flex-col items-center my-4">
           <h1 className="text-center font-bold mt-4">Archive</h1>
+          <Search />
           <h2 className="font-bold">{slug}</h2>
           <div>
             {comics.length &&

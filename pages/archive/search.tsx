@@ -7,7 +7,7 @@ import { LinkCreator } from '@/lib/LinkCreator';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-
+import SearchComponent from '@/components/Search';
 interface props {
   comics: any;
   search: string;
@@ -29,6 +29,7 @@ const Search = ({ comics, search, comicMeta }: props) => {
         {/* {archivesSeo?.attributes && <Seo seo={archivesSeo.attributes.seo} />} */}
         <div className="flex flex-col items-center my-4">
           <h1 className="text-center font-bold mt-4">Archive</h1>
+          <SearchComponent />
           <h2 className="font-bold">Search Results</h2>
           <div>
             {comics.length

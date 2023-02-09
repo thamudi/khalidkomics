@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout';
+import Search from '@/components/Search';
 import Seo from '@/components/Seo';
 import { fetchAPI } from '@/lib/api';
 import Link from 'next/link';
@@ -13,6 +14,7 @@ export default function Archive({ archivesSeo, archives }: any) {
               <Seo seo={archivesSeo.attributes.seo} />
             )}
             <h1 className="text-center font-bold mt-4">Archive</h1>
+            <Search />
             {archives.length && (
               <div className="flex flex-col items-center my-4">
                 {archives.map((archive: any) => {
