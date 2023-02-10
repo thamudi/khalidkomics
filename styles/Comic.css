@@ -4,33 +4,50 @@
 }
 
 .thumbnail {
-  @apply rounded-full object-cover mr-5;
+  @apply object-cover mr-5;
+  @apply md:w-40;
 }
-
+.round {
+  border-radius: 15px 15px;
+}
 .slider.awssld {
   --slider-height-percentage: 60%;
   --slider-transition-duration: 200ms;
-  --organic-arrow-thickness: 4px;
+  --organic-arrow-thickness: 3px;
   --organic-arrow-border-radius: 0px;
-  --organic-arrow-height: 40px;
+  --organic-arrow-height: 21px;
   --organic-arrow-color: #b7b7b7;
   --control-button-width: 6%;
   --control-button-height: 25%;
   --control-button-background: transparent;
-  --control-bullet-color: #888888;
-  --control-bullet-active-color: #d5d5d5;
+  --control-bullet-color: #adb9c1;
+  --control-bullet-active-color: #47a7e2;
   --loader-bar-color: transparent;
   --loader-bar-height: 1px;
-  /* width: 500px; */
-  height: 600px;
+  height: 500px;
+  @apply flex flex-col;
 }
-
+.slider.awssld .awssld__bullets {
+  @apply static;
+}
+.slider .awssld__bullets button {
+  @apply w-3 h-3;
+}
+.slider .awssld__bullets .awssld__bullets--active {
+  transform: none !important;
+}
 .slider .awssld__content {
   background-color: transparent;
 }
 
+.slider .awssld__content > img,
+.slider .awssld__content > video {
+  @apply p-8;
+}
+
 @media (min-width: 1024px) {
-  .lg\:w-full {
-    width: 500;
+  .slider.awssld {
+    width: 510px;
+    height: 600px;
   }
 }
