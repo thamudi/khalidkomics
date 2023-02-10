@@ -30,7 +30,10 @@ export async function getStaticPaths() {
   // create an object of params Ids
   const paths = comics.data.map((comic: any) => ({
     params: {
+      // slug: {
       id: comic.id.toString(),
+      year: comic.attributes.archive.data.attributes.slug,
+      // },
     },
   }));
 
@@ -59,6 +62,11 @@ export async function getStaticProps({ params }: any) {
   ]);
 
   const jsonResponse = await comicResponse.json();
+
+  // const limit = jsonResponse.config.params._limit;
+  // const start = jsonResponse.config.params._start;
+  // const page = Math.floor(start / limit) + 1;
+  // console.log('page: ', page);
 
   return {
     props: {
