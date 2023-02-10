@@ -31,7 +31,7 @@ header #nav {
 }
 
 #search {
-  @apply m-4 py-4 pb-8;
+  @apply m-4;
   @apply bg-transparent;
 }
 
@@ -72,9 +72,10 @@ header #nav img {
   @apply lg:w-28;
 }
 
+header #nav img:focus,
 header #nav img:hover,
-.animate-wiggle:hover,
-.animate-wiggle:active {
+.animate-wiggle:focus,
+.animate-wiggle:hover {
   animation-duration: 666ms; /** 🤘🤘 **/
   animation-timing-function: linear;
   animation-iteration-count: 1;

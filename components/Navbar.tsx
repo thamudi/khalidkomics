@@ -63,7 +63,7 @@ export default function Navbar() {
   };
   return (
     <header>
-      <div className="flex w-full justify-between md:justify-center mx-4">
+      <div className="flex w-full justify-between md:justify-center mx-8">
         <Link href="/">
           <Image
             className="logo "
