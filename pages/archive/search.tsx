@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import SearchComponent from '@/components/Search';
+import { formatDate } from '@/utils/dateFormatter';
 interface props {
   comics: any;
   search: string;
@@ -25,43 +26,46 @@ const Search = ({ comics, search, comicMeta }: props) => {
 
   return (
     <Layout>
-      <div className="subPage">
-        {/* {archivesSeo?.attributes && <Seo seo={archivesSeo.attributes.seo} />} */}
-        <div className="flex flex-col items-center my-4">
-          <h1 className="text-center font-bold mt-4">Archive</h1>
-          <SearchComponent />
-          <h2 className="font-bold">Search Results</h2>
-          <div>
-            {comics.length
-              ? comics.map((comic: any) => {
-                  return (
-                    <Link
-                      href={`/comics/${comic.id}`}
-                      className="flex items-center my-4 outline p-4"
-                      key={comic.id}
-                    >
-                      <Media
-                        media={comic.attributes.thumbnail}
-                        title={comic.attributes.title}
-                        width={100}
-                        height={100}
-                        className={'thumbnail'}
-                      />
+      {/* {archivesSeo?.attributes && <Seo seo={archivesSeo.attributes.seo} />} */}
+      <div className="flex flex-col items-center w-full">
+        <h1 className="text-center font-bold mt-4">Archive</h1>
+        <SearchComponent />
+        <h2 className="font-bold mx-8">Search Results for {search}</h2>
+        <div className="comics-list-container">
+          {comics.length
+            ? comics.map((comic: any) => {
+                return (
+                  <Link
+                    href={`/comics/${comic.attributes.archive.data.attributes.slug}/${comic.id}`}
+                    className="flex items-center m-4 p-4"
+                    key={comic.id}
+                  >
+                    <Media
+                      media={comic.attributes.thumbnail}
+                      title={comic.attributes.title}
+                      width={100}
+                      height={100}
+                      className={'thumbnail'}
+                    />
+                    <div className="block">
                       <h3>{comic.attributes.title}</h3>
-                    </Link>
-                  );
-                })
-              : 'No Result found'}
-          </div>
-          <div>
-            {comicMeta && comicMeta.pageCount > 1 && (
-              <ComicNav
-                comicMetaData={comicMeta}
-                fetchComic={fetchComic}
-                search={true}
-              />
-            )}
-          </div>
+                      <p className="text-gray-400">
+                        {formatDate(comic.attributes.releaseDate)}
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })
+            : 'No Result found'}
+        </div>
+        <div>
+          {comicMeta && comicMeta.pageCount > 1 && (
+            <ComicNav
+              comicMetaData={comicMeta}
+              fetchComic={fetchComic}
+              search={true}
+            />
+          )}
         </div>
       </div>
     </Layout>
@@ -81,7 +85,6 @@ export async function getServerSideProps(context: any) {
     })
   );
   const data = await res.json();
-  console.log('search: ', data);
 
   // Pass data to the page via props
   return {

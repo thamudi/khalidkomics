@@ -1,4 +1,5 @@
 import Layout from '@/components/Layout';
+import Media from '@/components/Media';
 import Search from '@/components/Search';
 import Seo from '@/components/Seo';
 import { fetchAPI } from '@/lib/api';
@@ -9,27 +10,32 @@ export default function Archive({ archivesSeo, archives }: any) {
     <Layout>
       <div className="flex flex-col items-center">
         <>
-          <div className="subPage">
-            {archivesSeo?.attributes && (
-              <Seo seo={archivesSeo.attributes.seo} />
-            )}
-            <h1 className="text-center font-bold mt-4">Archive</h1>
+          {archivesSeo?.attributes && <Seo seo={archivesSeo.attributes.seo} />}
+          <div className="flex flex-col items-center w-full">
+            <h1 className="text-center font-bold mt-4">
+              Welcome to the Archive!
+            </h1>
             <Search />
+            <p className="text-center">...or browse comics by year!</p>
             {archives.length && (
-              <div className="flex flex-col items-center my-4">
+              <div className="grid grid-cols-2 gap-4 w-fit mx-auto  my-4">
                 {archives.map((archive: any) => {
                   return (
                     <Link
                       href={`/archive/${archive.attributes.slug}`}
-                      className="italic"
+                      className="w-fit"
                       key={archive.attributes.slug}
                     >
-                      <div
-                        key={archive.attributes.id}
-                        className="my-4 p-8 outline"
-                      >
-                        {archive.attributes.title}
-                      </div>
+                      <Media
+                        media={archive.attributes.thumbnail}
+                        subThumbnail={
+                          archive.attributes.comics.data[0].attributes.thumbnail
+                        }
+                        title={archive.attributes.slug}
+                        width={135}
+                        height={135}
+                        className={'overlay'}
+                      />
                     </Link>
                   );
                 })}
@@ -49,6 +55,7 @@ export async function getStaticProps() {
       populate: ['deep'],
     }),
     fetchAPI('/archives', {
+      populate: ['deep'],
       'sort[0]': 'title:desc',
     }),
   ]);
