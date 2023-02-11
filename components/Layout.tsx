@@ -30,7 +30,9 @@ export default function Layout({ children }: LayoutProps) {
       <header>
         <Navbar />
       </header>
-      <main className="mt-4">{children}</main>
+      <main className="mt-4" style={{ height: '120vh' }}>
+        {children}
+      </main>
       {/* TODO: ask about keeping this or not */}
       {/* <Search /> */}
       <footer>
