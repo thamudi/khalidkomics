@@ -2,18 +2,8 @@ import { getStrapiMedia } from '@/lib/media';
 import Image from 'next/image';
 import { useRef } from 'react';
 
-const Media = ({
-  media,
-  title,
-  width,
-  height,
-  className,
-  subThumbnail,
-}: any) => {
+const Media = ({ media, title, width, height, className }: any) => {
   const mediaUrl = media?.data ? getStrapiMedia(media) : media;
-  const thumbnailBackground = subThumbnail?.data
-    ? getStrapiMedia(subThumbnail)
-    : subThumbnail;
   const imageFormats = ['jpg', 'png', 'gif', 'jpeg', 'svg'];
   const mediaFormat = mediaUrl.split('.')[mediaUrl.split('.').length - 1];
 
@@ -24,32 +14,22 @@ const Media = ({
     refVideo.current.muted = !refVideo.current.muted;
   };
   return imageFormats.includes(mediaFormat) ? (
-    thumbnailBackground ? (
-      <div className="relative">
-        <Image
-          src={mediaUrl}
-          alt={title}
-          width={width}
-          height={height}
-          className={`${className} absolute opacity-90`}
-        />
-        <Image
-          src={thumbnailBackground}
-          alt={title}
-          width={width}
-          height={height}
-          className={`${className} round`}
-        />
-      </div>
-    ) : (
+    <div className="relative">
+      {className === 'overlay' && (
+        <div style={{ width: width, height: height }} className={className}>
+          <h2 className="overlay-title">{title}</h2>
+        </div>
+      )}
       <Image
         src={mediaUrl}
         alt={title}
         width={width}
         height={height}
-        className={className}
+        className={
+          className !== 'overlay' ? className : 'overlay-rounded-corners'
+        }
       />
-    )
+    </div>
   ) : (
     <video
       ref={refVideo}

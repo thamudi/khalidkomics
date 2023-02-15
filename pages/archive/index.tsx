@@ -28,9 +28,6 @@ export default function Archive({ archivesSeo, archives }: any) {
                     >
                       <Media
                         media={archive.attributes.thumbnail}
-                        subThumbnail={
-                          archive.attributes.comics.data[0].attributes.thumbnail
-                        }
                         title={archive.attributes.slug}
                         width={135}
                         height={135}
