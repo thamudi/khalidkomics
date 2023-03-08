@@ -6,7 +6,6 @@ import { fetchAPIUrl } from '@/lib/api';
 import { LinkCreator } from '@/lib/LinkCreator';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 import SearchComponent from '@/components/Search';
 import { formatDate } from '@/utils/dateFormatter';
 interface props {
@@ -36,7 +35,7 @@ const Search = ({ comics, search, comicMeta }: props) => {
             ? comics.map((comic: any) => {
                 return (
                   <Link
-                    href={`/comics/${comic.attributes.archive.data.attributes.slug}/${comic.id}`}
+                    href={`/archive/search/single?id=${comic.id}&q=${search}`}
                     className="flex items-center m-4 p-4"
                     key={comic.id}
                   >
@@ -79,6 +78,7 @@ export async function getServerSideProps(context: any) {
   const res = await fetch(
     fetchAPIUrl(`/comics/`, {
       populate: 'deep',
+      'sort[0]': 'releaseDate:desc',
       'filters[keywords][$contains]': q,
       'pagination[pageSize]': 5,
       'pagination[page]': page,

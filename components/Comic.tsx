@@ -9,11 +9,12 @@ import Search from './Search';
 import { formatDate } from '@/utils/dateFormatter';
 
 const Comic = ({ comicData, fetchComic }: any) => {
-  const comic = comicData.data
+  const comic = comicData.data[0]
     ? comicData.data[0].attributes
-    : comicData.attributes;
+    : comicData.data.attributes;
+  const comicImage = comic.comic.data ? comic.comic.data : comic.comic;
   const comicMeta = comicData.meta?.pagination;
-  const images = comic.comic.data.map((comicImage: any) => {
+  const images = comicImage.map((comicImage: any) => {
     return getStrapiMedia({ data: comicImage });
   });
   return (
@@ -49,13 +50,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
       {comic.authorsNote?.length && (
         <ComicFootnote authorsNote={comic.authorsNote} />
       )}
-      <Share
-        comicId={
-          comicMeta
-            ? `${comicData.data[0].attributes.archive.data.attributes.slug}/${comicData.data[0].id}`
-            : null
-        }
-      />
+      <Share comicId={comicMeta ? `${comic.archive.slug}/${comic.id}` : null} />
     </div>
   );
 };

@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import { useTranslation } from 'next-i18next';
 
-import Image from 'next/image'
+import Image from 'next/image';
 import Link from 'next/link';
 
 const LanguageSwitcher: React.FC<{
@@ -12,7 +12,6 @@ const LanguageSwitcher: React.FC<{
   const { language: currentLanguage } = i18n;
   const router = useRouter();
   // const locales = router.locales ?? [currentLanguage];
-
 
   const [value, setValue] = useState(i18n.language);
 
@@ -35,9 +34,14 @@ const LanguageSwitcher: React.FC<{
 
   return (
     <>
-      <Link href="#" onChange={() => languageChanged()}>
-        <Image width={50} height={50} src="/img/icons/icons_lang_ar.svg" alt="switch ar" />
-      </Link>
+      <button onChange={() => languageChanged()}>
+        <Image
+          width={50}
+          height={50}
+          src="/img/icons/icons_lang_ar.svg"
+          alt="switch ar"
+        />
+      </button>
     </>
   );
 };
