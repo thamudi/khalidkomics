@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout';
 import Seo from '@/components/Seo';
-import { fetchAPI, fetchAPIUrl } from '@/lib/api';
+import { fetchAPI } from '@/lib/api';
 import { default as ComicComponent } from '@/components/Comic';
 import { useState } from 'react';
 import { ComicProp } from '@/interfaces/comic';
