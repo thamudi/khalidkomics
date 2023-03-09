@@ -3,34 +3,48 @@ import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
 import { default as ComicComponent } from '@/components/Comic';
 import { useState } from 'react';
+import { ComicProp } from '@/interfaces/comic';
 
 const Comic = ({ comicSeo, comicData, year }: any) => {
-  const [comic, setComic] = useState(comicData);
-  const fetchComic = (pageNumber: number = comic.meta.pagination.page) => {
-    fetch(
-      fetchAPIUrl('/comics', {
-        populate: '*',
-        'sort[0]': 'releaseDate:desc',
-        'pagination[pageSize]': 1,
-        'pagination[page]': pageNumber,
-        'filters[archive][slug][$eq]': year,
-      })
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setComic(data);
-      });
+  const [comic, setComic] = useState<ComicProp>(comicData);
+  const [isLoading, setLoading] = useState<boolean>(false);
+
+  /**
+   * A function that fetches the next comic when invoked
+   *
+   * @param pageNumber By default it gets the first page
+   */
+  const fetchComic = async (
+    pageNumber: number = comic.meta.pagination.page
+  ) => {
+    // set the loader
+    setLoading(true);
+    const responseData = await fetchAPI('/comics', {
+      populate: '*',
+      'sort[0]': 'releaseDate:desc',
+      'pagination[pageSize]': 1,
+      'pagination[page]': pageNumber,
+      'filters[archive][slug][$eq]': year,
+    });
+    setComic(responseData);
+    setLoading(false);
   };
 
   return (
     <Layout>
       <div className="flex flex-col items-center">
         {comicSeo?.attributes && <Seo seo={comicSeo.attributes.seo} />}
-        <>
-          {comic?.data && (
-            <ComicComponent comicData={comic} fetchComic={fetchComic} />
-          )}
-        </>
+        {isLoading ? (
+          <>
+            <p>Loading...</p>
+          </>
+        ) : (
+          <>
+            {comic?.data && (
+              <ComicComponent comicData={comic} fetchComic={fetchComic} />
+            )}
+          </>
+        )}
       </div>
     </Layout>
   );
@@ -41,21 +55,15 @@ const Comic = ({ comicSeo, comicData, year }: any) => {
 ///
 export async function getStaticPaths() {
   // fetch the endpoint all data
-  const res = await fetch(
-    fetchAPIUrl(`/comics`, {
-      populate: '*',
-    })
-  );
-  //format the data as a json object
-  const comics = await res.json();
+  const comics = await fetchAPI(`/comics`, {
+    populate: '*',
+  });
 
   // create an object of params Ids
   const paths = comics.data.map((comic: any) => ({
     params: {
-      // slug: {
       id: comic.id.toString(),
       year: comic.attributes.archive.data.attributes.slug,
-      // },
     },
   }));
 
@@ -91,6 +99,3 @@ export async function getStaticProps(context: any) {
 }
 
 export default Comic;
-function setComic(data: any) {
-  throw new Error('Function not implemented.');
-}
