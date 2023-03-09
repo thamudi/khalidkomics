@@ -1,20 +1,15 @@
 import { ComicNav } from '@/components/ComicNav';
 import Layout from '@/components/Layout';
 import Media from '@/components/Media';
-import { ComicMeta } from '@/interfaces/comic';
+import { ComicMeta, SearchProps } from '@/interfaces/comic';
 import { fetchAPIUrl } from '@/lib/api';
 import { LinkCreator } from '@/lib/LinkCreator';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SearchComponent from '@/components/Search';
 import { formatDate } from '@/utils/dateFormatter';
-interface props {
-  comics: any;
-  search: string;
-  comicMeta: ComicMeta;
-}
 
-const Search = ({ comics, search, comicMeta }: props) => {
+const Search = ({ comicsData, search, comicMeta }: SearchProps) => {
   const router = useRouter();
 
   const fetchComic = (page: number) => {
@@ -31,8 +26,8 @@ const Search = ({ comics, search, comicMeta }: props) => {
         <SearchComponent />
         <h2 className="font-bold mx-8">Search Results for {search}</h2>
         <div className="comics-list-container">
-          {comics.length
-            ? comics.map((comic: any) => {
+          {comicsData.length
+            ? comicsData.map((comic: any) => {
                 return (
                   <Link
                     href={`/archive/search/single?id=${comic.id}&q=${search}`}
@@ -89,7 +84,7 @@ export async function getServerSideProps(context: any) {
   // Pass data to the page via props
   return {
     props: {
-      comics: data.data,
+      comicsData: data.data,
       search: q,
       comicMeta: data.meta?.pagination,
     },
