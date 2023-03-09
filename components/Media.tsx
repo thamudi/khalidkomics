@@ -3,8 +3,8 @@ import Image from 'next/image';
 import { useRef } from 'react';
 
 const Media = ({ media, title, width, height, className }: any) => {
-  const mediaUrl = media.data ? getStrapiMedia(media) : media;
-  const imageFormats = ['jpg', 'png', 'gif', 'jpeg'];
+  const mediaUrl = media?.data ? getStrapiMedia(media) : media;
+  const imageFormats = ['jpg', 'png', 'gif', 'jpeg', 'svg'];
   const mediaFormat = mediaUrl.split('.')[mediaUrl.split('.').length - 1];
 
   const refVideo: any = useRef(null);
@@ -14,13 +14,22 @@ const Media = ({ media, title, width, height, className }: any) => {
     refVideo.current.muted = !refVideo.current.muted;
   };
   return imageFormats.includes(mediaFormat) ? (
-    <Image
-      src={mediaUrl}
-      alt={title}
-      width={width}
-      height={height}
-      className={className}
-    />
+    <div className="relative">
+      {className === 'overlay' && (
+        <div style={{ width: width, height: height }} className={className}>
+          <h2 className="overlay-title">{title}</h2>
+        </div>
+      )}
+      <Image
+        src={mediaUrl}
+        alt={title}
+        width={width}
+        height={height}
+        className={
+          className !== 'overlay' ? className : 'overlay-rounded-corners'
+        }
+      />
+    </div>
   ) : (
     <video
       ref={refVideo}

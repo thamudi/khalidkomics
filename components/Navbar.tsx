@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import Search from './Search';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface NavigationItems {
   src: string;
   alt: string;
   link: string;
+  component: boolean;
 }
 
 export default function Navbar() {
@@ -18,26 +19,31 @@ export default function Navbar() {
       src: '/img/nav/icons_archive_en.svg',
       alt: 'archive comics',
       link: '/archive',
+      component: false,
     },
     {
       src: '/img/nav/icons_about_en.svg',
       alt: 'about khalid komics',
       link: '/about',
+      component: false,
     },
     {
       src: '/img/nav/icons_contact_en.svg',
       alt: 'contact khalid komics',
       link: '/contact',
+      component: false,
     },
     {
       src: '/img/nav/icons_store_en.svg',
       alt: 'khalid komics store',
       link: 'https://khalidkomics.secure-decoration.com/',
+      component: false,
     },
     {
       src: '/img/icons/icons_lang_ar_2.svg',
       alt: 'switch ar',
       link: '#',
+      component: true,
     },
   ];
 
@@ -51,7 +57,7 @@ export default function Navbar() {
 
   useEffect(() => {
     window.addEventListener('resize', (e: any) => {
-      if (e.currentTarget.innerWidth < 645) {
+      if (e.currentTarget.innerWidth < 768) {
         setIsMobile(true);
       } else {
         setIsMobile(false);
@@ -64,13 +70,13 @@ export default function Navbar() {
   };
   return (
     <header>
-      <div className="flex w-full md:justify-center">
+      <div className="flex w-full justify-between md:justify-center mx-8">
         <Link href="/">
           <Image
-            className="logo"
-            width={300}
-            height={300}
-            src="/img/site_icons_logo_full.svg"
+            className="logo "
+            width={200}
+            height={200}
+            src="/img/site_icons_logo_full_white.svg"
             alt=""
             priority
           />
@@ -78,9 +84,9 @@ export default function Navbar() {
         {isMobile && (
           <Image
             className="animate-wiggle"
-            width={80}
-            height={80}
-            src="/img/nav/burgur.svg"
+            width={45}
+            height={45}
+            src="/img/nav/hamburger.svg"
             alt=""
             onClick={triggerNav}
           />
@@ -95,7 +101,6 @@ export default function Navbar() {
       ) : (
         <DesktopNav navItems={items} />
       )}
-      <Search />
     </header>
   );
 }

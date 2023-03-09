@@ -17,13 +17,14 @@
 @import url('./Comic.css');
 
 h1 {
-  @apply text-4xl lg:text-5xl;
+  @apply text-2xl lg:text-3xl;
 }
 
 h2 {
-  @apply text-xl lg:text-2xl;
+  @apply text-lg lg:text-xl;
 }
 
-h3 {
-  @apply lg:text-xl;
+.comics-list-container {
+  @apply flex flex-col w-full;
+  @apply md:w-fit md:grid md:grid-cols-3 md:gap-4 md:mx-4;
 }
