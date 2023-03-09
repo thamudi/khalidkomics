@@ -10,3 +10,8 @@ export interface ComicMeta {
   pageSize: number;
   total: number;
 }
+
+export interface ComicProp {
+  data: any;
+  meta: any;
+}

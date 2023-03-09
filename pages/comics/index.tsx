@@ -3,14 +3,10 @@ import Seo from '@/components/Seo';
 import { fetchAPI, fetchAPIUrl } from '@/lib/api';
 import { useContext, useEffect, useState } from 'react';
 import Comic from '@/components/Comic';
-
-interface ComicData {
-  data: any;
-  meta: any;
-}
+import { ComicProp } from '@/interfaces/comic';
 
 const Comics = ({ comicSeo }: any) => {
-  const [comics, setComic] = useState<ComicData>();
+  const [comics, setComic] = useState<ComicProp>();
   const [isLoading, setLoading] = useState<boolean>(false);
 
   //TODO: Check if SWR is a better fit
