@@ -1,7 +1,7 @@
 import Layout from '@/components/Layout';
 import Seo from '@/components/Seo';
-import { fetchAPI, fetchAPIUrl } from '@/lib/api';
-import { useContext, useEffect, useState } from 'react';
+import { fetchAPI } from '@/lib/api';
+import { useEffect, useState } from 'react';
 import Comic from '@/components/Comic';
 import { ComicProp } from '@/interfaces/comic';
 
@@ -9,24 +9,25 @@ const Comics = ({ comicSeo }: any) => {
   const [comics, setComic] = useState<ComicProp>();
   const [isLoading, setLoading] = useState<boolean>(false);
 
-  //TODO: Check if SWR is a better fit
-  const fetchComic = (pageNumber: number = 1, numberOfYears: number = 0) => {
+  /**
+   * A function that fetches the next comic when invoked
+   *
+   * @param pageNumber By default it gets the first page
+   */
+  const fetchComic = async (pageNumber: number = 1) => {
+    // set the loader
     setLoading(true);
-    fetch(
-      fetchAPIUrl('/comics', {
-        populate: '*',
-        'sort[0]': 'releaseDate:desc',
-        'pagination[pageSize]': 1,
-        'pagination[page]': pageNumber,
-      })
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setComic(data);
-        setLoading(false);
-      });
+    const responseData = await fetchAPI('/comics', {
+      populate: '*',
+      'sort[0]': 'releaseDate:desc',
+      'pagination[pageSize]': 1,
+      'pagination[page]': pageNumber,
+    });
+    setComic(responseData);
+    setLoading(false);
   };
 
+  // Observable that fetches the comic on page load
   useEffect(() => {
     fetchComic();
   }, []);
