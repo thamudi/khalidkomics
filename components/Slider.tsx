@@ -11,7 +11,11 @@ const Slider = ({ images }: any) => {
   };
 
   return (
-    <AwesomeSlider transitionDelay={1} className={'slider awssld'}>
+    <AwesomeSlider
+      infinite={false}
+      transitionDelay={1}
+      className={'slider awssld'}
+    >
       {images.map((image: string, i: string) => {
         const mediaFormat = image.split('.')[image.split('.').length - 1];
         if (imageFormats.includes(mediaFormat)) {
