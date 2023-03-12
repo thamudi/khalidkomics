@@ -1,19 +1,14 @@
+import { NavigationItems } from '@/types/nav.type';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
 
-interface NavigationItems {
-  src: string;
-  alt: string;
-  link: string;
-  component: boolean;
-}
-
 export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [toggleNav, setToggleNav] = useState(false);
 
+  // List of items that will show in the navigation bar
   const items = [
     {
       src: '/img/nav/icons_archive_en.svg',
@@ -47,6 +42,7 @@ export default function Navbar() {
     },
   ];
 
+  // Observable to check if the we are on mobile on not
   useEffect(() => {
     if (window.innerWidth < 700) {
       setIsMobile(true);
@@ -55,6 +51,7 @@ export default function Navbar() {
     }
   }, []);
 
+  // Observable to always check if a resize of the browser occurred
   useEffect(() => {
     window.addEventListener('resize', (e: any) => {
       if (e.currentTarget.innerWidth < 768) {
@@ -65,9 +62,7 @@ export default function Navbar() {
       }
     });
   });
-  const triggerNav = () => {
-    setToggleNav(!toggleNav);
-  };
+
   return (
     <header>
       <div className="flex w-full justify-between md:justify-center mx-8">
@@ -88,7 +83,7 @@ export default function Navbar() {
             height={45}
             src="/img/nav/hamburger.svg"
             alt=""
-            onClick={triggerNav}
+            onClick={() => setToggleNav(!toggleNav)}
           />
         )}
       </div>
@@ -105,6 +100,7 @@ export default function Navbar() {
   );
 }
 
+// Desktop Nav Component
 const DesktopNav = ({ navItems }: any) => {
   return (
     <>
@@ -112,12 +108,12 @@ const DesktopNav = ({ navItems }: any) => {
         {navItems.length &&
           navItems.map((item: NavigationItems, i: number) => {
             return (
-              <>
-                <Link key={item.alt} href={item.link}>
+              <div key={item.alt} className="flex">
+                <Link href={item.link}>
                   <Image width={90} height={90} src={item.src} alt={item.alt} />
                 </Link>
                 {navItems.length > i + 1 && '|'}
-              </>
+              </div>
             );
           })}
       </nav>
@@ -125,6 +121,7 @@ const DesktopNav = ({ navItems }: any) => {
   );
 };
 
+// Mobile Nav Component
 const MobileNav = ({ toggleNav, navItems }: any) => {
   return (
     <>

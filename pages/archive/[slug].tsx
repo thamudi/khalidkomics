@@ -3,11 +3,11 @@ import Layout from '@/components/Layout';
 import Media from '@/components/Media';
 import Search from '@/components/Search';
 import Seo from '@/components/Seo';
-import Image from 'next/image';
-import { fetchAPI, fetchAPIUrl } from '@/lib/api';
+import Sorting from '@/components/Sorting';
+import { fetchAPI } from '@/lib/api';
 import { formatDate } from '@/utils/dateFormatter';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ArchiveList = ({
   archivesSeo,
@@ -18,41 +18,20 @@ const ArchiveList = ({
   const [comics, setComics] = useState(serverComics);
   const [comicMeta, setComicMeta] = useState(serverComicMeta);
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [sortIcon, setSortIcon] = useState({
-    src: 'sort_descending',
-    value: 'desc',
-  });
-  const fetchComic = (pageNumber: number = 1, sortClicked: boolean = false) => {
-    if (sortClicked) {
-      if (sortIcon.value === 'desc') {
-        setSortIcon({
-          src: 'sort_ascending',
-          value: 'asc',
-        });
-      } else {
-        setSortIcon({
-          src: 'sort_descending',
-          value: 'desc',
-        });
-      }
-    }
-    setLoading(true);
 
-    fetch(
-      fetchAPIUrl('/comics', {
-        populate: '*',
-        'sort[0]': `releaseDate:${sortIcon.value}`,
-        'filters[archive][slug][$eq]': slug,
-        'pagination[pageSize]': 5,
-        'pagination[page]': pageNumber,
-      })
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setComics(data.data);
-        setComicMeta(data.meta?.pagination);
-        setLoading(false);
-      });
+  const fetchComic = async (pageNumber: number = 1, sort: string = 'desc') => {
+    // set the loader
+    setLoading(true);
+    const responseData = await fetchAPI('/comics', {
+      populate: '*',
+      'sort[0]': `releaseDate:${sort}`,
+      'filters[archive][slug][$eq]': slug,
+      'pagination[pageSize]': 5,
+      'pagination[page]': pageNumber,
+    });
+    setComics(responseData.data);
+    setComicMeta(responseData.meta?.pagination);
+    setLoading(false);
   };
 
   return (
@@ -63,23 +42,13 @@ const ArchiveList = ({
           Archive {'>'} {slug}
         </h1>
         <Search placeholderText={`Search for comics in ${slug}`} />
+        <Sorting fetchComic={fetchComic} />
         {isLoading ? (
           <>
             <p>Loading...</p>
           </>
         ) : (
           <>
-            {/* TODO: Fix the issue with the delay in setting the state of the comics */}
-            {/* <div className="w-full mx-4 flex flex-row-reverse">
-              <Image
-                src={`/img/icons/${sortIcon.src}.svg`}
-                alt={''}
-                width={30}
-                height={30}
-                className="mx-8 cursor-pointer"
-                onClick={() => fetchComic(1, true)}
-              />
-            </div> */}
             <div className="comics-list-container">
               {comics.length &&
                 comics.map((comic: any) => {
@@ -125,13 +94,11 @@ const ArchiveList = ({
 ///
 export async function getStaticPaths() {
   // fetch the endpoint all data
-  const res = await fetch(
-    fetchAPIUrl(`/archives`, {
-      populate: 'deep',
-    })
-  );
+  const archives = await fetchAPI(`/archives`, {
+    populate: 'deep',
+  });
   //format the data as a json object
-  const archives = await res.json();
+  // const archives = await res.json();
 
   // create an object of params Ids
   const paths = archives.data.map((archive: any) => ({
@@ -157,24 +124,20 @@ export async function getStaticProps({ params, query }: any) {
     fetchAPI('/seo', {
       populate: 'deep',
     }),
-    fetch(
-      fetchAPIUrl(`/comics/`, {
-        populate: 'deep',
-        'filters[archive][slug][$eq]': params.slug,
-        'sort[0]': 'releaseDate:desc',
-        'pagination[pageSize]': 5,
-        'pagination[page]': page ? page : 1,
-      })
-    ),
+    fetchAPI(`/comics/`, {
+      populate: 'deep',
+      'filters[archive][slug][$eq]': params.slug,
+      'sort[0]': 'releaseDate:desc',
+      'pagination[pageSize]': 5,
+      'pagination[page]': page ? page : 1,
+    }),
   ]);
-
-  const archivesJson = await archivesResponse.json();
 
   return {
     props: {
       archivesSeo: archivesSeoResponse.data,
-      serverComics: archivesJson.data,
-      serverComicMeta: archivesJson.meta?.pagination,
+      serverComics: archivesResponse.data,
+      serverComicMeta: archivesResponse.meta?.pagination,
       slug: params.slug,
     },
   };

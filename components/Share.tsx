@@ -6,7 +6,10 @@ import copy from 'copy-to-clipboard';
 const Share = ({ comicId }: any) => {
   const router = useRouter();
   const shareOnSocialMedia = (socialMedia: string) => {
-    const url = comicId
+    const isSingle = window.location.href.split('/').includes('search');
+    const url = isSingle
+      ? window.location.href
+      : comicId
       ? `${window.location.href}/${comicId}`
       : window.location.href;
 

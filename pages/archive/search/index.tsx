@@ -1,25 +1,24 @@
 import { ComicNav } from '@/components/ComicNav';
 import Layout from '@/components/Layout';
 import Media from '@/components/Media';
-import { ComicMeta } from '@/interfaces/comic';
-import { fetchAPIUrl } from '@/lib/api';
+import { ComicMeta, SearchProps } from '@/interfaces/comic';
+import { fetchAPI, fetchAPIUrl } from '@/lib/api';
 import { LinkCreator } from '@/lib/LinkCreator';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SearchComponent from '@/components/Search';
 import { formatDate } from '@/utils/dateFormatter';
-interface props {
-  comics: any;
-  search: string;
-  comicMeta: ComicMeta;
-}
+import Sorting from '@/components/Sorting';
 
-const Search = ({ comics, search, comicMeta }: props) => {
+const Search = ({ comicsData, search, comicMeta }: SearchProps) => {
   const router = useRouter();
 
-  const fetchComic = (page: number) => {
+  const fetchComic = (page: number, sort: string = 'desc') => {
     router.push(
-      LinkCreator.toQuery({ q: search, page: page }, '/archive/search')
+      LinkCreator.toQuery(
+        { q: search, page: page, sort: sort },
+        '/archive/search'
+      )
     );
   };
 
@@ -29,10 +28,11 @@ const Search = ({ comics, search, comicMeta }: props) => {
       <div className="flex flex-col items-center w-full">
         <h1 className="text-center font-bold mt-4">Archive</h1>
         <SearchComponent />
+        <Sorting fetchComic={fetchComic} />
         <h2 className="font-bold mx-8">Search Results for {search}</h2>
         <div className="comics-list-container">
-          {comics.length
-            ? comics.map((comic: any) => {
+          {comicsData.length
+            ? comicsData.map((comic: any) => {
                 return (
                   <Link
                     href={`/archive/search/single?id=${comic.id}&q=${search}`}
@@ -73,23 +73,22 @@ const Search = ({ comics, search, comicMeta }: props) => {
 
 export async function getServerSideProps(context: any) {
   const { q, page } = context.query;
+  let { sort } = context.query;
+  sort ? (sort = sort) : (sort = 'desc');
 
   // Fetch data from external API
-  const res = await fetch(
-    fetchAPIUrl(`/comics/`, {
-      populate: 'deep',
-      'sort[0]': 'releaseDate:desc',
-      'filters[keywords][$contains]': q,
-      'pagination[pageSize]': 5,
-      'pagination[page]': page,
-    })
-  );
-  const data = await res.json();
+  const data = await fetchAPI(`/comics/`, {
+    populate: 'deep',
+    'sort[0]': sort ? `releaseDate:${sort}` : 'releaseDate:desc',
+    'filters[keywords][$contains]': q,
+    'pagination[pageSize]': 5,
+    'pagination[page]': page,
+  });
 
   // Pass data to the page via props
   return {
     props: {
-      comics: data.data,
+      comicsData: data.data,
       search: q,
       comicMeta: data.meta?.pagination,
     },

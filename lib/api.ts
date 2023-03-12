@@ -1,4 +1,11 @@
 import qs from 'qs';
+import pino from 'pino';
+
+const logger = pino({
+  browser: {
+    asObject: false,
+  },
+});
 
 /**
  * Get full Strapi URL from path
@@ -37,33 +44,15 @@ export async function fetchAPI(
     `/api${path}${queryString ? `?${queryString}` : ''}`
   )}`;
 
+  // logger.info(requestUrl);
   // Trigger API call
   const response = await fetch(requestUrl, mergedOptions);
 
   // Handle response
   if (!response.ok) {
-    console.error(response.statusText);
+    logger.error(response.statusText);
     throw new Error(`An error occured please try again`);
   }
   const data = await response.json();
   return data;
-}
-
-export function fetchAPIUrl(path: string, urlParamsObject = {}, options = {}) {
-  // Merge default and user options
-  const mergedOptions = {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    ...options,
-  };
-
-  // Build request URL
-  const queryString = qs.stringify(urlParamsObject);
-  const url = `${getStrapiURL(
-    `/api${path}${queryString ? `?${queryString}` : ''}`
-  )}`;
-
-  console.log('Fetch URL: ', url);
-  return url;
 }

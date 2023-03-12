@@ -10,3 +10,14 @@ export interface ComicMeta {
   pageSize: number;
   total: number;
 }
+
+export interface ComicProp {
+  data: any;
+  meta: any;
+}
+
+export interface SearchProps {
+  comicsData: any;
+  search: string;
+  comicMeta: ComicMeta;
+}
