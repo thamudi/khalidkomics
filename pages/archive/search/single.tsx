@@ -1,25 +1,22 @@
 import Layout from '@/components/Layout';
 import { SearchProps } from '@/interfaces/comic';
-import { fetchAPI, fetchAPIUrl } from '@/lib/api';
+import { fetchAPI } from '@/lib/api';
 import Comic from '@/components/Comic';
 import { useState } from 'react';
 
 const Single = ({ comicsData, search }: SearchProps) => {
   const [comics, setComics] = useState(comicsData);
-  const fetchComic = (pageNumber: number = comics.meta.pagination.page) => {
-    fetch(
-      fetchAPIUrl('/comics', {
-        populate: '*',
-        'sort[0]': 'releaseDate:desc',
-        'pagination[pageSize]': 1,
-        'pagination[page]': pageNumber,
-        'filters[keywords][$contains]]': search,
-      })
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setComics(data);
-      });
+  const fetchComic = async (
+    pageNumber: number = comics.meta.pagination.page
+  ) => {
+    const responseData = await fetchAPI('/comics', {
+      populate: '*',
+      'sort[0]': 'releaseDate:desc',
+      'pagination[pageSize]': 1,
+      'pagination[page]': pageNumber,
+      'filters[keywords][$contains]]': search,
+    });
+    setComics(responseData);
   };
 
   return (
