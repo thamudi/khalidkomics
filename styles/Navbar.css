@@ -36,6 +36,11 @@ header #nav {
   @apply bg-transparent;
 }
 
+header #nav,
+#search form {
+  @apply lg:mx-60;
+}
+
 #search form {
   @apply flex justify-between items-end;
   @apply relative;

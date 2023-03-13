@@ -4,43 +4,11 @@ import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
 
-export default function Navbar() {
+export default function Navbar({ items }: any) {
   const [isMobile, setIsMobile] = useState(false);
   const [toggleNav, setToggleNav] = useState(false);
 
   // List of items that will show in the navigation bar
-  const items = [
-    {
-      src: '/img/nav/icons_archive_en.svg',
-      alt: 'archive comics',
-      link: '/archive',
-      component: false,
-    },
-    {
-      src: '/img/nav/icons_about_en.svg',
-      alt: 'about khalid komics',
-      link: '/about',
-      component: false,
-    },
-    {
-      src: '/img/nav/icons_contact_en.svg',
-      alt: 'contact khalid komics',
-      link: '/contact',
-      component: false,
-    },
-    {
-      src: '/img/nav/icons_store_en.svg',
-      alt: 'khalid komics store',
-      link: 'https://khalidkomics.secure-decoration.com/',
-      component: false,
-    },
-    {
-      src: '/img/icons/icons_lang_ar_2.svg',
-      alt: 'switch ar',
-      link: '#',
-      component: true,
-    },
-  ];
 
   // Observable to check if the we are on mobile on not
   useEffect(() => {
@@ -65,7 +33,7 @@ export default function Navbar() {
 
   return (
     <header>
-      <div className="flex w-full justify-between md:justify-center mx-8">
+      <div className="flex w-full justify-between md:justify-center mx-8 ">
         <Link href="/">
           <Image
             className="logo "
