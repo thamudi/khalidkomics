@@ -3,4 +3,5 @@ export type NavigationItems = {
   alt: string;
   link: string;
   component: boolean;
+  text: string;
 };
