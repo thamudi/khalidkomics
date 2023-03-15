@@ -3,8 +3,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import LanguageSwitcher from './LanguageSwitcher';
+import NavItems from './NavItems';
 
-export default function Navbar({ items }: any) {
+export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [toggleNav, setToggleNav] = useState(false);
 
@@ -33,7 +34,7 @@ export default function Navbar({ items }: any) {
 
   return (
     <header>
-      <div className="flex w-full justify-between md:justify-center mx-8 ">
+      <div className="flex w-full justify-between md:justify-center mx-8">
         <Link href="/">
           <Image
             className="logo "
@@ -59,10 +60,10 @@ export default function Navbar({ items }: any) {
         <MobileNav
           toggleNav={toggleNav}
           setToggleNav={setToggleNav}
-          navItems={items}
+          navItems={NavItems}
         />
       ) : (
-        <DesktopNav navItems={items} />
+        <DesktopNav navItems={NavItems} />
       )}
     </header>
   );

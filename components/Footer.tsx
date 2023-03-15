@@ -3,8 +3,9 @@ import { NavigationItems } from '@/types/nav.type';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import NavItems from './NavItems';
 
-export default function Footer({ items }: any) {
+export default function Footer() {
   const [seo, setSeo]: any = useState();
 
   useEffect(() => {
@@ -26,8 +27,8 @@ export default function Footer({ items }: any) {
       }}
     >
       <div className="flex justify-between">
-        {items.length &&
-          items.map((item: NavigationItems, i: number) => {
+        {NavItems.length &&
+          NavItems.map((item: NavigationItems, i: number) => {
             return (
               <Link
                 key={i}
