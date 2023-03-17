@@ -41,11 +41,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
         </>
       )}
       {comicMeta && (
-        <ComicNav
-          comicMetaData={comicMeta}
-          fetchComic={fetchComic}
-          search={false}
-        />
+        <ComicNav comicMetaData={comicMeta} fetchComic={fetchComic} />
       )}
       {comic.authorsNote?.length && (
         <ComicFootnote authorsNote={comic.authorsNote} />
