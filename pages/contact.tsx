@@ -1,23 +1,26 @@
 import Layout from '@/components/Layout';
+import Message from '@/components/Message';
 import Image from 'next/image';
 import React, { useState } from 'react';
 
 const contact = () => {
   const [firstName, setFirstName] = useState<string>('');
+  const [disabled, setDisabled] = useState(false);
   const [email, setEmail] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
-  const [message, setMessage] = useState<string>('');
+  const [textMessage, setTextMessage] = useState<string>('');
   const [submitted, setSubmitted] = useState(false);
+  const [message, setMessage] = useState<string>('');
+  const [type, setType] = useState<string>('');
 
-  const handleSubmit = (e: { preventDefault: () => void }) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log('sending ...');
+    setDisabled(true);
 
     let data = {
       name: firstName + ' ' + lastName,
       email,
-      subject: lastName,
-      message,
+      message: textMessage,
     };
 
     fetch('/api/contact', {
@@ -27,22 +30,35 @@ const contact = () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
-    }).then((res) => {
-      console.log('Response received');
-      if (res.status === 200) {
-        console.log('Response succeeded!');
+    })
+      .then(async (res) => {
+        const data: any = await res.json();
+        if (res.status === 200) {
+          setType(data.type);
+          setMessage(data.message);
+        } else if (res.status === 400) {
+          setType(data.type);
+          setMessage(data.message);
+        } else if (res.status === 500) {
+          setType(data.type);
+          setMessage(data.message);
+        }
+      })
+      .catch((error) => {
+        console.log(error.message);
+      })
+      .finally(() => {
         setSubmitted(true);
-        // setName('');
-        // setEmail('');
-        // setSubject('');
-        // setMessage('');
-      }
-    });
+        setDisabled(false);
+      });
   };
 
   return (
     <Layout>
-      <div className="w-10/12 lg:w-1/2 mx-auto relative">
+      <div className="mx-8 lg:mx-auto lg:w-1/2 relative">
+        {submitted && (
+          <Message type={type} message={message} close={setSubmitted} />
+        )}
         <form
           className="border-4 border-black p-8 mb-16"
           action="/api/feedback-form"
@@ -89,15 +105,18 @@ const contact = () => {
               name="message"
               id="message"
               onChange={(e) => {
-                setMessage(e.target.value);
+                setTextMessage(e.target.value);
               }}
               placeholder="Message"
             ></textarea>
             <button
+              disabled={disabled}
               onClick={(e) => {
                 handleSubmit(e);
               }}
-              className="bg-link-blue px-2 py-1 w-fit font-bold border-black border-2"
+              className={`bg-link-blue px-2 py-1 w-fit font-bold border-black border-2 ${
+                disabled ? 'opacity-50' : 'opacity-100'
+              }`}
               type="submit"
             >
               Submit

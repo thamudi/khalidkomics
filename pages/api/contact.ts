@@ -1,8 +1,9 @@
+import { ContactBody } from '@/interfaces/comic';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createTransport } from 'nodemailer';
 
 export default function (req: NextApiRequest, res: NextApiResponse) {
-  // const nodemailer = require('nodemailer');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (req.method !== 'POST') {
     res.status(405).send({ message: 'Only POST requests allowed' });
     return;
@@ -16,24 +17,19 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     },
     secure: true,
   });
-  // Get data submitted in request's body.
-  const body = req.body;
+  const body: ContactBody = req.body;
 
-  // Optional logging to see the responses
-  // in the command line where next.js app is running.
-  // console.log('body: ', body)
-
-  // Guard clause checks for first and last name,
-  // and returns early if they are not found
-  if (!body.name) {
+  if (!body.name.trim()) {
     // Sends a HTTP bad request error code
-    return res.status(400).json({ data: 'Name not found' });
+    return res.status(400).json({ type: 'info', message: 'Name not found' });
   } else if (!body.email) {
-    return res.status(400).json({ data: 'Email not found' });
-  } else if (!body.subject) {
-    return res.status(400).json({ data: 'Subject not found' });
+    return res.status(400).json({ type: 'info', message: 'Email not found' });
+  } else if (!emailRegex.test(body.email)) {
+    return res
+      .status(400)
+      .json({ type: 'info', message: 'Please use a valid email' });
   } else if (!body.message) {
-    return res.status(400).json({ data: 'Message not found' });
+    return res.status(400).json({ type: 'info', message: 'Message not found' });
   } else {
     const mailData = {
       from: body.email,
@@ -45,11 +41,17 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     transporter.sendMail(mailData, function (err, info) {
       if (err) {
         console.log(err);
+        // Sends a HTTP success code
+        res
+          .status(500)
+          .json({ type: 'error', message: `Woops! Something went wrong!` });
       } else {
         console.log(`Mail sent to ${body.email}`);
+        // Sends a HTTP success code
+        res
+          .status(200)
+          .json({ type: 'success', message: `Mail sent to ${body.email}` });
       }
     });
-    // Sends a HTTP success code
-    res.status(200).json({ message: `Mail sent to ${body.email}` });
   }
 }

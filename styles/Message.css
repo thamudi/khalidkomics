@@ -1,0 +1,15 @@
+.success {
+  background-color: rgba(109, 185, 129, 0.1);
+  border-color: #6db981;
+  color: #6db981;
+}
+.error {
+  background-color: rgba(242, 111, 84, 0.1);
+  border-color: #f26f54;
+  color: #f26f54;
+}
+.info {
+  background-color: rgba(11, 150, 171, 0.1);
+  border-color: #0b96ab;
+  color: #0b96ab;
+}
