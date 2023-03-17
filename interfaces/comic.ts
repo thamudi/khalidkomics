@@ -21,3 +21,8 @@ export interface SearchProps {
   search: string;
   comicMeta: ComicMeta;
 }
+
+export interface ComicNavProps {
+  comicMetaData: ComicMeta;
+  fetchComic: (pageNumber: number) => void;
+}

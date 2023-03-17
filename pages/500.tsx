@@ -40,7 +40,7 @@ export default function Home({ comicSeo, locale }: any) {
                   <Link
                     key={i}
                     href={item.link}
-                    className="first-letter:uppercase text-blue-400 text-lg"
+                    className="first-letter:uppercase text-link-blue text-lg"
                   >
                     {item?.text}
                   </Link>

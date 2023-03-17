@@ -1,13 +1,14 @@
 import { ComicNav } from '@/components/ComicNav';
 import Layout from '@/components/Layout';
 import Media from '@/components/Media';
+import Pagination from '@/components/Pagination';
 import Search from '@/components/Search';
 import Seo from '@/components/Seo';
 import Sorting from '@/components/Sorting';
 import { fetchAPI } from '@/lib/api';
 import { formatDate } from '@/utils/dateFormatter';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 const ArchiveList = ({
   archivesSeo,
@@ -75,12 +76,8 @@ const ArchiveList = ({
                   );
                 })}
             </div>
-            {comicMeta && comicMeta.pageCount > 1 && (
-              <ComicNav
-                comicMetaData={comicMeta}
-                fetchComic={fetchComic}
-                search={true}
-              />
+            {comicMeta && (
+              <Pagination comicMetaData={comicMeta} fetchComic={fetchComic} />
             )}
           </>
         )}

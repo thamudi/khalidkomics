@@ -2,13 +2,14 @@ import { ComicNav } from '@/components/ComicNav';
 import Layout from '@/components/Layout';
 import Media from '@/components/Media';
 import { ComicMeta, SearchProps } from '@/interfaces/comic';
-import { fetchAPI, fetchAPIUrl } from '@/lib/api';
+import { fetchAPI } from '@/lib/api';
 import { LinkCreator } from '@/lib/LinkCreator';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import SearchComponent from '@/components/Search';
 import { formatDate } from '@/utils/dateFormatter';
 import Sorting from '@/components/Sorting';
+import Pagination from '@/components/Pagination';
 
 const Search = ({ comicsData, search, comicMeta }: SearchProps) => {
   const router = useRouter();
@@ -58,12 +59,8 @@ const Search = ({ comicsData, search, comicMeta }: SearchProps) => {
             : 'No Result found'}
         </div>
         <div>
-          {comicMeta && comicMeta.pageCount > 1 && (
-            <ComicNav
-              comicMetaData={comicMeta}
-              fetchComic={fetchComic}
-              search={true}
-            />
+          {comicMeta && (
+            <Pagination comicMetaData={comicMeta} fetchComic={fetchComic} />
           )}
         </div>
       </div>
