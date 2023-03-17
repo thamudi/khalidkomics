@@ -26,3 +26,15 @@ export interface ComicNavProps {
   comicMetaData: ComicMeta;
   fetchComic: (pageNumber: number) => void;
 }
+
+export interface ContactBody {
+  name: string;
+  email: string;
+  message: string;
+}
+
+export interface MessageProps {
+  type: String;
+  message: String;
+  close: (status: boolean) => any;
+}

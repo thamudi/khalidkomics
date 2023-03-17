@@ -13,8 +13,12 @@
 @import url('./Share.css');
 /* About page */
 @import url('./about.css');
+/* Contact page */
+@import url('./contact.css');
 /* Comic Component */
 @import url('./Comic.css');
+/* Message Component */
+@import url('./Message.css');
 
 h1 {
   @apply text-2xl lg:text-3xl;
