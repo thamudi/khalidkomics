@@ -38,7 +38,7 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
     const mailData = {
       from: body.email,
       to: process.env.SMTP_EMAIL,
-      subject: `Message From ${body.name} - ${body.subject}`,
+      subject: `Message From Khalid Komics dot com`,
       text: `${body.message} \n ${body.email}`,
     };
 
