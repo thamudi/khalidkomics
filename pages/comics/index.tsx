@@ -4,10 +4,12 @@ import { fetchAPI } from '@/lib/api';
 import { useEffect, useState } from 'react';
 import Comic from '@/components/Comic';
 import { ComicProp } from '@/interfaces/comic';
+import { getCookie } from 'cookies-next';
 
 const Comics = ({ comicSeo }: any) => {
   const [comics, setComic] = useState<ComicProp>();
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [locale, setLocale] = useState<string | undefined>('en');
 
   /**
    * A function that fetches the next comic when invoked
@@ -22,6 +24,7 @@ const Comics = ({ comicSeo }: any) => {
       'sort[0]': 'releaseDate:desc',
       'pagination[pageSize]': 1,
       'pagination[page]': pageNumber,
+      locale: locale,
     });
     setComic(responseData);
     setLoading(false);
@@ -29,6 +32,7 @@ const Comics = ({ comicSeo }: any) => {
 
   // Observable that fetches the comic on page load
   useEffect(() => {
+    getCookie('NEXT_LOCALE') && setLocale(getCookie('NEXT_LOCALE')?.toString());
     fetchComic();
   }, []);
 

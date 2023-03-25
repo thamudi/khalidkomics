@@ -89,21 +89,19 @@ const ArchiveList = ({
 ///
 // Get static paths for the pages to render
 ///
-export async function getStaticPaths() {
+export async function getStaticPaths({ locales }: any) {
   // fetch the endpoint all data
   const archives = await fetchAPI(`/archives`, {
     populate: 'deep',
   });
-  //format the data as a json object
-  // const archives = await res.json();
-
-  // create an object of params Ids
-  const paths = archives.data.map((archive: any) => ({
-    params: {
-      slug: archive.attributes.slug,
-    },
-  }));
-
+  const paths = archives.data
+    .map((archive: any) =>
+      locales.map((locale: string) => ({
+        params: { slug: archive.attributes.slug },
+        locale, // Pass locale here
+      }))
+    )
+    .flat(); // Flatten array to avoid nested arrays
   return {
     paths,
     // fallback false means other routes should be 404
@@ -114,7 +112,7 @@ export async function getStaticPaths() {
 ///
 // Get static props from API
 ///
-export async function getStaticProps({ params, query }: any) {
+export async function getStaticProps({ params, query, locale }: any) {
   const { page } = query ? query : '';
   // Run API calls in parallel
   const [archivesSeoResponse, archivesResponse] = await Promise.all([
@@ -127,6 +125,7 @@ export async function getStaticProps({ params, query }: any) {
       'sort[0]': 'releaseDate:desc',
       'pagination[pageSize]': 5,
       'pagination[page]': page ? page : 1,
+      locale: locale,
     }),
   ]);
 

@@ -71,6 +71,7 @@ const Search = ({ comicsData, search, comicMeta }: SearchProps) => {
 export async function getServerSideProps(context: any) {
   const { q, page } = context.query;
   let { sort } = context.query;
+  const { locale } = context;
   sort ? (sort = sort) : (sort = 'desc');
 
   // Fetch data from external API
@@ -80,6 +81,7 @@ export async function getServerSideProps(context: any) {
     'filters[keywords][$contains]': q,
     'pagination[pageSize]': 5,
     'pagination[page]': page,
+    locale: locale,
   });
 
   // Pass data to the page via props

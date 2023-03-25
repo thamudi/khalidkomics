@@ -27,11 +27,4 @@ export default [
     text: 'store',
     component: false,
   },
-  //TODO: move this into the navigation bar component
-  // {
-  //   src: '/img/icons/icons_lang_ar_2.svg',
-  //   alt: 'switch ar',
-  //   link: '#',
-  //   component: true,
-  // },
 ];

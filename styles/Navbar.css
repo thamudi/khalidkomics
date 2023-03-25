@@ -116,7 +116,8 @@ header #nav a {
   height: 300px;
 }
 
-.mobileNav.toggle a {
+.mobileNav.toggle a,
+.mobileNav.toggle button {
   display: flex;
   justify-content: space-around;
   /* @apply mx-4 my-4; */

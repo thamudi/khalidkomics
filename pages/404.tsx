@@ -63,8 +63,6 @@ export default function Home({ comicSeo, locale }: any) {
 
 export async function getStaticProps({ locale }: any) {
   // Run API calls in parallel
-  console.log(locale);
-
   const [comicSeoResponse] = await Promise.all([
     fetchAPI('/seo', {
       populate: 'deep',

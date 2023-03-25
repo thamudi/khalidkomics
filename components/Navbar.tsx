@@ -8,8 +8,6 @@ export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [toggleNav, setToggleNav] = useState(false);
 
-  // List of items that will show in the navigation bar
-
   // Observable to check if the we are on mobile on not
   useEffect(() => {
     if (window.innerWidth < 700) {
@@ -73,17 +71,27 @@ const DesktopNav = ({ navItems }: any) => {
   return (
     <>
       <nav id="nav">
-        {navItems.length &&
-          navItems.map((item: NavigationItems, i: number) => {
-            return (
-              <div key={item.alt} className="flex">
-                <Link href={item.link}>
-                  <Image width={90} height={90} src={item.src} alt={item.alt} />
-                </Link>
-                {navItems.length > i + 1 && '|'}
-              </div>
-            );
-          })}
+        <div className="flex">
+          {navItems.length &&
+            navItems.map((item: NavigationItems, i: number) => {
+              return (
+                <>
+                  <Link key={item.alt} href={item.link}>
+                    <Image
+                      width={90}
+                      height={90}
+                      src={item.src}
+                      alt={item.alt}
+                    />
+                  </Link>
+                  {i + 1 === navItems.length && (
+                    <LanguageSwitcher key={i + 1} />
+                  )}
+                  {navItems.length > i + 1 && '|'}
+                </>
+              );
+            })}
+        </div>
       </nav>
     </>
   );
@@ -99,9 +107,12 @@ const MobileNav = ({ toggleNav, navItems }: any) => {
       >
         {navItems.map((item: NavigationItems, i: number) => {
           return (
-            <Link key={item.alt} href={item.link}>
-              <Image width={90} height={90} src={item.src} alt={item.alt} />
-            </Link>
+            <>
+              <Link key={item.alt} href={item.link}>
+                <Image width={90} height={90} src={item.src} alt={item.alt} />
+              </Link>
+              {i + 1 === navItems.length && <LanguageSwitcher key={i + 1} />}
+            </>
           );
         })}
       </div>

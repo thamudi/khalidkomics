@@ -45,7 +45,7 @@ export default function Archive({ archivesSeo, archives }: any) {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }: any) {
   // Run API calls in parallel
   const [archivesSeoResponse, archivesResponse] = await Promise.all([
     fetchAPI('/seo', {
@@ -54,6 +54,7 @@ export async function getStaticProps() {
     fetchAPI('/archives', {
       populate: ['deep'],
       'sort[0]': 'title:desc',
+      locale: locale,
     }),
   ]);
 
