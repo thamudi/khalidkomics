@@ -2,7 +2,6 @@ import { NavigationItems } from '@/types/nav.type';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import LanguageSwitcher from './LanguageSwitcher';
 import NavItems from './NavItems';
 
 export default function Navbar() {
