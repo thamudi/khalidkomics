@@ -122,13 +122,13 @@ const contact = () => {
               Submit
             </button>
           </div>
-          <div className="flex flex-row-reverse relative">
+          <div className="flex flex-row-reverse relative mt-4">
             <Image
-              src={'/img/shukri.svg'}
+              src={'/img/contact_illustration.svg'}
               alt={'shukri'}
-              width={100}
-              height={100}
-              className="absolute transform scale-x-[-1]"
+              width={150}
+              height={150}
+              className="absolute -bottom-16"
             />
           </div>
         </form>
