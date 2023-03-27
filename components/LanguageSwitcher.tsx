@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { setCookie, getCookie } from 'cookies-next';
 
 const LanguageSwitcher: React.FC = () => {
@@ -11,18 +12,12 @@ const LanguageSwitcher: React.FC = () => {
   const [otherLocale, setOtherLocale] = useState<string>('ar');
 
   const switchToLocale = (newLocale: string = otherLocale) => {
-    const path = router.asPath;
-    console.log('clicked again', otherLocale);
-    console.log('clicked again', currentLocale);
-
-    setCurrentLocale(otherLocale);
+    setCurrentLocale(newLocale);
 
     setCookie('NEXT_LOCALE', newLocale, {
       maxAge: 31536000,
       path: '/',
     });
-
-    router.push(path, path, { locale: newLocale });
   };
 
   useEffect(() => {
@@ -36,14 +31,14 @@ const LanguageSwitcher: React.FC = () => {
 
   return (
     <>
-      <button onClick={() => switchToLocale()}>
+      <Link href={'/'} locale={otherLocale} onClick={() => switchToLocale()}>
         <Image
           width={50}
           height={50}
           src={`/img/icons/icons_lang_${otherLocale}_2.svg`}
           alt={`switch ${otherLocale}`}
         />
-      </button>
+      </Link>
     </>
   );
 };
