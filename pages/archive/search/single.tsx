@@ -4,7 +4,7 @@ import { fetchAPI } from '@/lib/api';
 import Comic from '@/components/Comic';
 import { useState } from 'react';
 
-const Single = ({ comicsData, search }: SearchProps) => {
+const Single = ({ comicsData, search, locale }: SearchProps) => {
   const [comics, setComics] = useState(comicsData);
   const fetchComic = async (
     pageNumber: number = comics.meta.pagination.page
@@ -15,6 +15,7 @@ const Single = ({ comicsData, search }: SearchProps) => {
       'pagination[pageSize]': 1,
       'pagination[page]': pageNumber,
       'filters[keywords][$contains]]': search,
+      locale: locale,
     });
     setComics(responseData);
   };
@@ -33,12 +34,14 @@ const Single = ({ comicsData, search }: SearchProps) => {
 
 export async function getServerSideProps(context: any) {
   const { id, q } = context.query;
-
+  const { locale } = context;
   // Fetch data from external API
   const res = await fetchAPI(`/comics/${id}`, {
     populate: '*',
     'sort[0]': 'releaseDate:desc',
+    'pagination[pageSize]': 1,
     'filters[keywords][$contains]': q,
+    locale: locale,
   });
 
   // Pass data to the page via props
@@ -46,6 +49,7 @@ export async function getServerSideProps(context: any) {
     props: {
       comicsData: res,
       search: q,
+      locale: locale,
     },
   };
 }

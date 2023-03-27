@@ -1,4 +1,3 @@
-import { ComicNav } from '@/components/ComicNav';
 import Layout from '@/components/Layout';
 import Media from '@/components/Media';
 import Pagination from '@/components/Pagination';
@@ -8,17 +7,20 @@ import Sorting from '@/components/Sorting';
 import { fetchAPI } from '@/lib/api';
 import { formatDate } from '@/utils/dateFormatter';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const ArchiveList = ({
   archivesSeo,
   serverComics,
   slug,
   serverComicMeta,
+  localeProps,
 }: any) => {
   const [comics, setComics] = useState(serverComics);
   const [comicMeta, setComicMeta] = useState(serverComicMeta);
   const [isLoading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const fetchComic = async (pageNumber: number = 1, sort: string = 'desc') => {
     // set the loader
@@ -29,11 +31,16 @@ const ArchiveList = ({
       'filters[archive][slug][$eq]': slug,
       'pagination[pageSize]': 5,
       'pagination[page]': pageNumber,
+      locale: localeProps,
     });
     setComics(responseData.data);
     setComicMeta(responseData.meta?.pagination);
     setLoading(false);
   };
+
+  useEffect(() => {
+    comics.length === 0 && router.push('/404');
+  }, []);
 
   return (
     <Layout>
@@ -135,6 +142,7 @@ export async function getStaticProps({ params, query, locale }: any) {
       serverComics: archivesResponse.data,
       serverComicMeta: archivesResponse.meta?.pagination,
       slug: params.slug,
+      localeProps: locale,
     },
   };
 }

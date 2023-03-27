@@ -58,6 +58,7 @@ export async function getStaticPaths({ locales }: any) {
   // fetch the endpoint all data
   const comics = await fetchAPI(`/comics`, {
     populate: '*',
+    locale: 'all',
   });
 
   // create an object of params Ids
@@ -68,10 +69,11 @@ export async function getStaticPaths({ locales }: any) {
           id: comic.id.toString(),
           year: comic.attributes.archive.data.attributes.slug,
         },
-        locale, // Pass locale here
+        locale,
       }))
     )
     .flat(); // Flatten array to avoid nested arrays
+  console.log(paths);
 
   return {
     paths,
@@ -85,7 +87,9 @@ export async function getStaticPaths({ locales }: any) {
 ///
 export async function getStaticProps(context: any) {
   // Run API calls in parallel
-  const { id, year, locale } = context.params;
+  const { id, year } = context.params;
+  const { locale } = context;
+
   const [comicSeoResponse, comicResponse] = await Promise.all([
     fetchAPI('/seo', {
       populate: 'deep',

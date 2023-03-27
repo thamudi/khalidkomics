@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react';
 import Comic from '@/components/Comic';
 import { ComicProp } from '@/interfaces/comic';
 import { getCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
-const Comics = ({ comicSeo }: any) => {
+const Comics = ({ comicSeo, localeProp }: any) => {
   const [comics, setComic] = useState<ComicProp>();
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [locale, setLocale] = useState<string | undefined>('en');
-
+  const [locale, setLocale] = useState<string | undefined>(localeProp);
+  const router = useRouter();
   /**
    * A function that fetches the next comic when invoked
    *
@@ -36,6 +37,10 @@ const Comics = ({ comicSeo }: any) => {
     fetchComic();
   }, []);
 
+  useEffect(() => {
+    !comics?.data || (comics?.data.length === 0 && router.push('/404'));
+  }, []);
+
   return (
     <Layout>
       <div className="flex flex-col items-center">
@@ -56,7 +61,7 @@ const Comics = ({ comicSeo }: any) => {
   );
 };
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }: any) {
   // Run API calls in parallel
   const [comicSeoResponse] = await Promise.all([
     fetchAPI('/seo', {
@@ -67,6 +72,7 @@ export async function getStaticProps() {
   return {
     props: {
       comicSeo: comicSeoResponse.data,
+      localeProp: locale,
     },
   };
 }

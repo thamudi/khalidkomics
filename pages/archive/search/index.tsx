@@ -1,4 +1,3 @@
-import { ComicNav } from '@/components/ComicNav';
 import Layout from '@/components/Layout';
 import Media from '@/components/Media';
 import { ComicMeta, SearchProps } from '@/interfaces/comic';
@@ -75,7 +74,7 @@ export async function getServerSideProps(context: any) {
   sort ? (sort = sort) : (sort = 'desc');
 
   // Fetch data from external API
-  const data = await fetchAPI(`/comics/`, {
+  const data = await fetchAPI(`/comics`, {
     populate: 'deep',
     'sort[0]': sort ? `releaseDate:${sort}` : 'releaseDate:desc',
     'filters[keywords][$contains]': q,

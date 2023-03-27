@@ -62,6 +62,7 @@ export async function getStaticProps({ locale }: any) {
     props: {
       archivesSeo: archivesSeoResponse.data,
       archives: archivesResponse.data,
+      localProps: locale,
     },
   };
 }
