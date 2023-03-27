@@ -20,6 +20,7 @@ export interface SearchProps {
   comicsData: any;
   search: string;
   comicMeta: ComicMeta;
+  locale?: string;
 }
 
 export interface ComicNavProps {
