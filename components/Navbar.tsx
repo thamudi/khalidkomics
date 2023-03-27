@@ -71,7 +71,7 @@ const DesktopNav = ({ navItems }: any) => {
   return (
     <>
       <nav id="nav">
-        <div className="flex">
+        <div className="flex items-center">
           {navItems.length &&
             navItems.map((item: NavigationItems, i: number) => {
               return (
