@@ -1,4 +1,5 @@
 import { NavigationItems } from '@/types/nav.type';
+import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -7,8 +8,7 @@ import NavItems from './NavItems';
 export default function Navbar() {
   const [isMobile, setIsMobile] = useState(false);
   const [toggleNav, setToggleNav] = useState(false);
-
-  // List of items that will show in the navigation bar
+  const [locale, setLocale] = useState<string>('en');
 
   // Observable to check if the we are on mobile on not
   useEffect(() => {
@@ -30,6 +30,10 @@ export default function Navbar() {
       }
     });
   });
+
+  useEffect(() => {
+    getCookie('NEXT_LOCALE') && setLocale(getCookie('NEXT_LOCALE')!.toString());
+  }, []);
 
   return (
     <header>
@@ -60,48 +64,58 @@ export default function Navbar() {
           toggleNav={toggleNav}
           setToggleNav={setToggleNav}
           navItems={NavItems}
+          locale={locale}
         />
       ) : (
-        <DesktopNav navItems={NavItems} />
+        <DesktopNav navItems={NavItems} locale={locale} />
       )}
     </header>
   );
 }
 
 // Desktop Nav Component
-const DesktopNav = ({ navItems }: any) => {
+const DesktopNav = ({ navItems, locale }: any) => {
   return (
     <>
       <nav id="nav">
-        {navItems.length &&
-          navItems.map((item: NavigationItems, i: number) => {
+        <div className="flex items-center">
+          {navItems[locale].map((item: NavigationItems, i: number) => {
             return (
-              <div key={item.alt} className="flex">
-                <Link href={item.link}>
+              <>
+                <Link key={i} href={item.link}>
                   <Image width={90} height={90} src={item.src} alt={item.alt} />
                 </Link>
-                {navItems.length > i + 1 && '|'}
-              </div>
+                {i + 1 === navItems[locale].length && (
+                  <LanguageSwitcher key={i + 1} />
+                )}
+                {navItems[locale].length > i + 1 && '|'}
+              </>
             );
           })}
+        </div>
       </nav>
     </>
   );
 };
 
 // Mobile Nav Component
-const MobileNav = ({ toggleNav, navItems }: any) => {
+const MobileNav = ({ toggleNav, navItems, locale }: any) => {
   return (
     <>
       <div
         className={`mobileNav ${toggleNav ? 'toggle' : ''}`}
         style={{ width: toggleNav ? `100%` : `0` }}
       >
-        {navItems.map((item: NavigationItems, i: number) => {
+        {navItems[locale].map((item: NavigationItems, i: number) => {
           return (
-            <Link key={item.alt} href={item.link}>
-              <Image width={90} height={90} src={item.src} alt={item.alt} />
-            </Link>
+            <>
+              <Link key={item.alt} href={item.link}>
+                <Image width={90} height={90} src={item.src} alt={item.alt} />
+              </Link>
+              {i + 1 === navItems[locale].length && (
+                <LanguageSwitcher key={i + 1} />
+              )}
+            </>
           );
         })}
       </div>

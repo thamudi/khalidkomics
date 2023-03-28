@@ -1,7 +1,6 @@
 import Layout from '@/components/Layout';
 import Seo from '@/components/Seo';
 import { fetchAPI } from '@/lib/api';
-import Link from 'next/link';
 import Image from 'next/image';
 import { getStrapiMedia } from '@/lib/media';
 
@@ -36,11 +35,12 @@ export default function About({ about }: any) {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ locale }: any) {
   // Run API calls in parallel
   const [aboutPageResponse] = await Promise.all([
     fetchAPI('/about', {
       populate: 'deep',
+      locale: locale,
     }),
   ]);
 

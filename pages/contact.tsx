@@ -1,7 +1,9 @@
 import Layout from '@/components/Layout';
 import Message from '@/components/Message';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const contact = () => {
   const [firstName, setFirstName] = useState<string>('');
@@ -12,6 +14,7 @@ const contact = () => {
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState<string>('');
   const [type, setType] = useState<string>('');
+  const { t } = useTranslation('common');
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -66,9 +69,7 @@ const contact = () => {
           id="contactForm"
         >
           <div className="flex flex-col gap-y-4">
-            <h1 className="text-center">
-              Send me a message and I"ll get back to you!
-            </h1>
+            <h1 className="text-center">{t('contact title')}</h1>
             <div className="flex justify-between gap-x-6">
               <input
                 type="text"
@@ -77,7 +78,7 @@ const contact = () => {
                 onChange={(e) => {
                   setFirstName(e.target.value);
                 }}
-                placeholder="First Name"
+                placeholder={`${t('fname')}`}
                 required
               />
               <input
@@ -87,7 +88,7 @@ const contact = () => {
                 onChange={(e) => {
                   setLastName(e.target.value);
                 }}
-                placeholder="Last Name"
+                placeholder={`${t('lname')}`}
               />
             </div>
             <input
@@ -97,7 +98,7 @@ const contact = () => {
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              placeholder="Email Address"
+              placeholder={`${t('email')}`}
               required
             />
             <textarea
@@ -107,7 +108,7 @@ const contact = () => {
               onChange={(e) => {
                 setTextMessage(e.target.value);
               }}
-              placeholder="Message"
+              placeholder={`${t('message')}`}
             ></textarea>
             <button
               disabled={disabled}
@@ -119,7 +120,7 @@ const contact = () => {
               }`}
               type="submit"
             >
-              Submit
+              {t('submit')}
             </button>
           </div>
           <div className="flex flex-row-reverse relative mt-4">
@@ -136,5 +137,11 @@ const contact = () => {
     </Layout>
   );
 };
-
+export async function getStaticProps({ locale }: any) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    },
+  };
+}
 export default contact;
