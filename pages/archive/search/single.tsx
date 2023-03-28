@@ -3,9 +3,12 @@ import { SearchProps } from '@/interfaces/comic';
 import { fetchAPI } from '@/lib/api';
 import Comic from '@/components/Comic';
 import { useState } from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const Single = ({ comicsData, search, locale }: SearchProps) => {
   const [comics, setComics] = useState(comicsData);
+  const { t } = useTranslation('common');
   const fetchComic = async (
     pageNumber: number = comics.meta.pagination.page
   ) => {
@@ -23,7 +26,7 @@ const Single = ({ comicsData, search, locale }: SearchProps) => {
   return (
     <Layout>
       <div className="flex flex-col items-center w-full">
-        <h1 className="text-center font-bold mt-4">Archive</h1>
+        <h1 className="text-center font-bold mt-4">{t('archive')}</h1>
         <>
           {comics?.data && <Comic comicData={comics} fetchComic={fetchComic} />}
         </>
@@ -50,6 +53,7 @@ export async function getServerSideProps(context: any) {
       comicsData: res,
       search: q,
       locale: locale,
+      ...(await serverSideTranslations(locale, ['common'])),
     },
   };
 }

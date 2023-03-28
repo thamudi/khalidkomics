@@ -1,13 +1,11 @@
-import App, { AppContext } from 'next/app';
+import App from 'next/app';
 import Head from 'next/head';
 import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
-import { DefaultSeo } from 'next-seo';
-import config from '../next-seo.config';
-import Layout from '@/components/Layout';
 import { createContext } from 'react';
 import { fetchAPI } from '@/lib/api';
 import { getStrapiMedia } from '@/lib/media';
+import { appWithTranslation } from 'next-i18next';
 
 // Store Strapi Global object in context
 export const GlobalContext = createContext({});
@@ -40,15 +38,4 @@ MyApp.getInitialProps = async (ctx: any) => {
   return { ...appProps, pageProps: { global: globalRes.data } };
 };
 
-export default MyApp;
-
-// export default function App({ Component, pageProps }: AppProps) {
-//   return (
-//     <>
-//       <DefaultSeo {...config} />
-//       <Layout>
-//         <Component {...pageProps} />
-//       </Layout>
-//     </>
-//   )
-// }
+export default appWithTranslation(MyApp);

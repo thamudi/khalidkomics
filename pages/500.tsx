@@ -34,18 +34,17 @@ export default function Home({ comicSeo, locale }: any) {
           <p>{pageContent[locale].paragraph_1}</p>
           <p>{pageContent[locale].paragraph_2}</p>
           <div className="flex justify-between w-full">
-            {NavItems.length &&
-              NavItems.map((item: NavigationItems, i: number) => {
-                return (
-                  <Link
-                    key={i}
-                    href={item.link}
-                    className="first-letter:uppercase text-link-blue text-lg"
-                  >
-                    {item?.text}
-                  </Link>
-                );
-              })}
+            {NavItems[locale].map((item: NavigationItems, i: number) => {
+              return (
+                <Link
+                  key={i}
+                  href={item.link}
+                  className="first-letter:uppercase text-link-blue text-lg"
+                >
+                  {item?.text}
+                </Link>
+              );
+            })}
           </div>
           <div className="flex justify-end mt-8">
             <Image

@@ -6,9 +6,11 @@ import Seo from '@/components/Seo';
 import Sorting from '@/components/Sorting';
 import { fetchAPI } from '@/lib/api';
 import { formatDate } from '@/utils/dateFormatter';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 
 const ArchiveList = ({
   archivesSeo,
@@ -21,6 +23,7 @@ const ArchiveList = ({
   const [comicMeta, setComicMeta] = useState(serverComicMeta);
   const [isLoading, setLoading] = useState<boolean>(false);
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const fetchComic = async (pageNumber: number = 1, sort: string = 'desc') => {
     // set the loader
@@ -53,7 +56,7 @@ const ArchiveList = ({
         <Sorting fetchComic={fetchComic} />
         {isLoading ? (
           <>
-            <p>Loading...</p>
+            <p>{t('loading')}</p>
           </>
         ) : (
           <>
@@ -143,6 +146,7 @@ export async function getStaticProps({ params, query, locale }: any) {
       serverComicMeta: archivesResponse.meta?.pagination,
       slug: params.slug,
       localeProps: locale,
+      ...(await serverSideTranslations(locale, ['common'])),
     },
   };
 }

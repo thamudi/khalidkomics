@@ -1,5 +1,6 @@
 import { fetchAPI } from '@/lib/api';
 import { NavigationItems } from '@/types/nav.type';
+import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -7,7 +8,7 @@ import NavItems from './NavItems';
 
 export default function Footer() {
   const [seo, setSeo]: any = useState();
-
+  const [locale, setLocale] = useState<string>('en');
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchAPI('/seo', {
@@ -19,6 +20,10 @@ export default function Footer() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    getCookie('NEXT_LOCALE') && setLocale(getCookie('NEXT_LOCALE')!.toString());
+  }, []);
+
   return (
     <div
       className="flex flex-col mt-4 py-8 px-8 lg:px-60"
@@ -27,18 +32,17 @@ export default function Footer() {
       }}
     >
       <div className="flex justify-between">
-        {NavItems.length &&
-          NavItems.map((item: NavigationItems, i: number) => {
-            return (
-              <Link
-                key={i}
-                href={item.link}
-                className="first-letter:uppercase text-white text-lg"
-              >
-                {item?.text}
-              </Link>
-            );
-          })}
+        {NavItems[locale].map((item: NavigationItems, i: number) => {
+          return (
+            <Link
+              key={i}
+              href={item.link}
+              className="first-letter:uppercase text-white text-lg"
+            >
+              {item?.text}
+            </Link>
+          );
+        })}
       </div>
 
       <div className="socialLink flex flex-row justify-between mt-14">

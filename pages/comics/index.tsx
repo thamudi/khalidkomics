@@ -6,12 +6,15 @@ import Comic from '@/components/Comic';
 import { ComicProp } from '@/interfaces/comic';
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 const Comics = ({ comicSeo, localeProp }: any) => {
   const [comics, setComic] = useState<ComicProp>();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [locale, setLocale] = useState<string | undefined>(localeProp);
   const router = useRouter();
+  const { t } = useTranslation('common');
   /**
    * A function that fetches the next comic when invoked
    *
@@ -47,7 +50,7 @@ const Comics = ({ comicSeo, localeProp }: any) => {
         {comicSeo?.attributes && <Seo seo={comicSeo.attributes.seo} />}
         {isLoading ? (
           <>
-            <p>Loading...</p>
+            <p>{t('loading')}</p>
           </>
         ) : (
           <>
@@ -73,6 +76,7 @@ export async function getStaticProps({ locale }: any) {
     props: {
       comicSeo: comicSeoResponse.data,
       localeProp: locale,
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
     },
   };
 }

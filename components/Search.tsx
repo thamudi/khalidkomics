@@ -1,12 +1,14 @@
 import { LinkCreator } from '@/lib/LinkCreator';
 import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
 
 const Search = ({ placeholderText }: any) => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const placeholder = placeholderText
     ? placeholderText
-    : 'Search for specific comics ...';
+    : t('search placeholder');
 
   const searchComic = (e: React.SyntheticEvent) => {
     e.preventDefault();

@@ -4,11 +4,13 @@ import { fetchAPI } from '@/lib/api';
 import { default as ComicComponent } from '@/components/Comic';
 import { useState } from 'react';
 import { ComicProp } from '@/interfaces/comic';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 const Comic = ({ comicSeo, comicData, year, locale }: any) => {
   const [comic, setComic] = useState<ComicProp>(comicData);
   const [isLoading, setLoading] = useState<boolean>(false);
-
+  const { t } = useTranslation('common');
   /**
    * A function that fetches the next comic when invoked
    *
@@ -37,7 +39,7 @@ const Comic = ({ comicSeo, comicData, year, locale }: any) => {
         {comicSeo?.attributes && <Seo seo={comicSeo.attributes.seo} />}
         {isLoading ? (
           <>
-            <p>Loading...</p>
+            <p>{t('loading')}</p>
           </>
         ) : (
           <>
@@ -73,7 +75,6 @@ export async function getStaticPaths({ locales }: any) {
       }))
     )
     .flat(); // Flatten array to avoid nested arrays
-  console.log(paths);
 
   return {
     paths,
@@ -97,7 +98,7 @@ export async function getStaticProps(context: any) {
     fetchAPI(`/comics/${id}`, {
       populate: '*',
       'filters[archive][slug][$eq]': year,
-      locale: locale,
+      locale: 'all',
     }),
   ]);
   return {
@@ -106,6 +107,7 @@ export async function getStaticProps(context: any) {
       comicData: comicResponse,
       year: year,
       locale: locale,
+      ...(await serverSideTranslations(locale, ['common'])),
     },
   };
 }
