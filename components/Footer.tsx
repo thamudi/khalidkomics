@@ -4,11 +4,13 @@ import { getCookie } from 'cookies-next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'next-i18next';
 import NavItems from './NavItems';
 
 export default function Footer() {
   const [seo, setSeo]: any = useState();
   const [locale, setLocale] = useState<string>('en');
+  const { t } = useTranslation();
   useEffect(() => {
     const fetchData = async () => {
       const data = await fetchAPI('/seo', {
@@ -55,7 +57,7 @@ export default function Footer() {
             className="mr-4"
           />
           <span className="text-white">
-            © {new Date().getFullYear()} Khalid Nahar. All rights reserved.
+            © {new Date().getFullYear()} {t('copy rights')}
           </span>
         </div>
         <div className="flex gap-x-4">

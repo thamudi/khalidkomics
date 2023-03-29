@@ -1,14 +1,20 @@
+import { getCookie } from 'cookies-next';
 import Head from 'next/head';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import Footer from './Footer';
 import Navbar from './Navbar';
-import Search from './Search';
 
 type LayoutProps = {
   readonly children: ReactNode;
 };
 
 export default function Layout({ children }: LayoutProps) {
+  useEffect(() => {
+    document.documentElement.lang = getCookie('NEXT_LOCALE')
+      ? getCookie('NEXT_LOCALE')!.toString()
+      : 'en';
+  }, []);
+
   return (
     <>
       <Head>

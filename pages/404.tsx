@@ -41,7 +41,7 @@ export default function Home({ comicSeo, locale }: any) {
                   href={item.link}
                   className="first-letter:uppercase text-link-blue text-lg"
                 >
-                  {item?.text}
+                  {item.text}
                 </Link>
               );
             })}
