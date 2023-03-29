@@ -20,6 +20,10 @@
 /* Message Component */
 @import url('./Message.css');
 
+html:lang(ar) {
+  direction: rtl;
+}
+
 h1 {
   @apply text-2xl lg:text-3xl;
 }
