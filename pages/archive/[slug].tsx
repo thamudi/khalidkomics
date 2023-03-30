@@ -22,15 +22,22 @@ const ArchiveList = ({
   const [comics, setComics] = useState(serverComics);
   const [comicMeta, setComicMeta] = useState(serverComicMeta);
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [sort, setSort] = useState<string>('desc');
+  const [page, setPage] = useState<number>(1);
   const router = useRouter();
   const { t } = useTranslation('common');
 
-  const fetchComic = async (pageNumber: number = 1, sort: string = 'desc') => {
+  const fetchComic = async (
+    pageNumber: number = page,
+    sortValue: string = sort
+  ) => {
     // set the loader
     setLoading(true);
+    setPage(pageNumber);
+    setSort(sortValue);
     const responseData = await fetchAPI('/comics', {
       populate: '*',
-      'sort[0]': `releaseDate:${sort}`,
+      'sort[0]': `releaseDate:${sortValue}`,
       'filters[archive][slug][$eq]': slug,
       'pagination[pageSize]': 5,
       'pagination[page]': pageNumber,
