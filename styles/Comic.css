@@ -33,7 +33,7 @@
 }
 .slider.awssld {
   --slider-height-percentage: 60%;
-  --slider-transition-duration: 200ms;
+  --slider-transition-duration: 100ms;
   --organic-arrow-thickness: 3px;
   --organic-arrow-border-radius: 0px;
   --organic-arrow-height: 21px;
