@@ -1,3 +1,7 @@
-.socialLink svg path .cls-2 {
-  fill: black;
+.footer-image {
+  @apply mr-4;
+}
+
+.footer-image:lang(ar) {
+  @apply mr-0 ml-4;
 }

@@ -2,7 +2,7 @@
   "search placeholder": "Search for specific comics ...",
   "alternate search": "...or browse comics by year!",
   "archive title": "Welcome to the Archive!",
-  "archive": "archive",
+  "archive": "Archive",
   "loading": "Loading...",
   "search result title": "Search Results for",
   "contact title": "Send me a message and I'll get back to you!",
@@ -12,5 +12,10 @@
   "email": "Email Address",
   "message": "Message",
   "copy rights": "Khalid Nahar. All rights reserved.",
-  "Name not found": "Name not found"
+  "name not found": "Name not found",
+  "email not found": "Email not found",
+  "use valid email": "Please use a valid email",
+  "message not found": "Message not found",
+  "contact error": "Woops! Something went wrong!",
+  "mail sent": "Mail sent"
 }

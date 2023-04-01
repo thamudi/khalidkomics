@@ -54,7 +54,7 @@ export default function Footer() {
             width={50}
             height={50}
             alt={'shukri'}
-            className="mr-4"
+            className="footer-image"
           />
           <span className="text-white">
             © {new Date().getFullYear()} {t('copy rights')}

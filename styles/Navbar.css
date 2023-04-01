@@ -96,6 +96,7 @@ header #nav a {
 .comicNav {
   @apply flex items-center;
   @apply mx-auto my-3;
+  direction: ltr;
 }
 
 .comicNav img {

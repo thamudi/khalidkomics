@@ -12,5 +12,10 @@
   "email": "عنوان البريد",
   "message": "الرسالة",
   "copy rights": "كامل الحقوق محفوظة. خالد نهار",
-  "Name not found": "الأسم خير متوفر"
+  "name not found": "الأسم غير متوفر",
+  "email not found": "الأيميل غير متوفر",
+  "use valid email": "الرجاء إستعمال إيميل صحيح",
+  "message not found": "الرسالة غير متوفرة",
+  "contact error": "عفوا, حصل خطأ ما",
+  "mail sent": "تم بعث الرسالة "
 }

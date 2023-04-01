@@ -21,15 +21,13 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
 
   if (!body.name.trim()) {
     // Sends a HTTP bad request error code
-    return res.status(400).json({ type: 'info', message: 'Name not found' });
+    return res.status(400).json({ type: 'info', message: 'name not found' });
   } else if (!body.email) {
-    return res.status(400).json({ type: 'info', message: 'Email not found' });
+    return res.status(400).json({ type: 'info', message: 'email not found' });
   } else if (!emailRegex.test(body.email)) {
-    return res
-      .status(400)
-      .json({ type: 'info', message: 'Please use a valid email' });
+    return res.status(400).json({ type: 'info', message: 'use valid email' });
   } else if (!body.message) {
-    return res.status(400).json({ type: 'info', message: 'Message not found' });
+    return res.status(400).json({ type: 'info', message: 'message not found' });
   } else {
     const mailData = {
       from: body.email,
@@ -42,15 +40,13 @@ export default function (req: NextApiRequest, res: NextApiResponse) {
       if (err) {
         console.log(err);
         // Sends a HTTP success code
-        res
-          .status(500)
-          .json({ type: 'error', message: `Woops! Something went wrong!` });
+        res.status(500).json({ type: 'error', message: `contact error` });
       } else {
         console.log(`Mail sent to ${body.email}`);
         // Sends a HTTP success code
         res
           .status(200)
-          .json({ type: 'success', message: `Mail sent to ${body.email}` });
+          .json({ type: 'success', message: `mail sent`, data: body.email });
       }
     });
   }

@@ -6,7 +6,7 @@ const nextConfig = {
   i18n,
   images: {
     loader: "default",
-    domains: [process.env.DOMAINS],
+    domains: [process.env.DOMAINS, process.env.BUCKET_ENDPOINT],
   },
 }
 
