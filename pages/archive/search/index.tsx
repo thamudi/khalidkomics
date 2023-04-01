@@ -11,15 +11,20 @@ import Sorting from '@/components/Sorting';
 import Pagination from '@/components/Pagination';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import { useState } from 'react';
 
 const Search = ({ comicsData, search, comicMeta }: SearchProps) => {
   const router = useRouter();
+  const [sort, setSort] = useState<string>('desc');
+  const [page, setPage] = useState<number>(1);
   const { t } = useTranslation('common');
 
-  const fetchComic = (page: number, sort: string = 'desc') => {
+  const fetchComic = (pageNumber: number = page, sortValue: string = sort) => {
+    setPage(pageNumber);
+    setSort(sortValue);
     router.push(
       LinkCreator.toQuery(
-        { q: search, page: page, sort: sort },
+        { q: search, page: pageNumber, sort: sortValue },
         '/archive/search'
       )
     );

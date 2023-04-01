@@ -13,6 +13,7 @@ const contact = () => {
   const [textMessage, setTextMessage] = useState<string>('');
   const [submitted, setSubmitted] = useState(false);
   const [message, setMessage] = useState<string>('');
+  const [apiData, setApiData] = useState<string>('');
   const [type, setType] = useState<string>('');
   const { t } = useTranslation('common');
 
@@ -39,6 +40,7 @@ const contact = () => {
         if (res.status === 200) {
           setType(data.type);
           setMessage(data.message);
+          setApiData(data.data);
         } else if (res.status === 400) {
           setType(data.type);
           setMessage(data.message);
@@ -60,7 +62,12 @@ const contact = () => {
     <Layout>
       <div className="mx-8 lg:mx-auto lg:w-1/2 relative">
         {submitted && (
-          <Message type={type} message={message} close={setSubmitted} />
+          <Message
+            type={type}
+            apiMessage={message}
+            close={setSubmitted}
+            data={apiData}
+          />
         )}
         <form
           className="border-4 border-black p-8 mb-16"

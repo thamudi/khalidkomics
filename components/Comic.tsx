@@ -9,9 +9,13 @@ import Search from './Search';
 import { formatDate } from '@/utils/dateFormatter';
 
 const Comic = ({ comicData, fetchComic }: any) => {
+  const comicId = comicData.data[0] ? comicData.data[0].id : comicData.data.id;
   const comic = comicData.data[0]
     ? comicData.data[0].attributes
     : comicData.data.attributes;
+  const archiveSlug = comic.archive.data
+    ? comic.archive.data.attributes.slug
+    : comic.archive.slug;
   const comicImage = comic.comic.data ? comic.comic.data : comic.comic;
   const comicMeta = comicData.meta?.pagination;
   const images = comicImage.map((comicImage: any) => {
@@ -46,7 +50,7 @@ const Comic = ({ comicData, fetchComic }: any) => {
       {comic.authorsNote?.length && (
         <ComicFootnote authorsNote={comic.authorsNote} />
       )}
-      <Share comicId={comicMeta ? `${comic.archive.slug}/${comic.id}` : null} />
+      <Share comicId={`${archiveSlug}/${comicId}`} />
     </div>
   );
 };
