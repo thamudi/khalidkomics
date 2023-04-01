@@ -57,7 +57,7 @@ const ArchiveList = ({
       {archivesSeo?.attributes && <Seo seo={archivesSeo.attributes.seo} />}
       <div className="flex flex-col items-center w-full">
         <h1 className="text-center font-bold mt-4">
-          Archive {'>'} {slug}
+          {t('archive')} {'>'} {slug}
         </h1>
         <Search placeholderText={`Search for comics in ${slug}`} />
         <Sorting fetchComic={fetchComic} />

@@ -35,7 +35,8 @@ export interface ContactBody {
 }
 
 export interface MessageProps {
-  type: String;
-  message: String;
+  type: string;
+  apiMessage: string;
   close: (status: boolean) => any;
+  data?: string;
 }
