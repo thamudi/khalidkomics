@@ -85,7 +85,7 @@ export async function getServerSideProps(context: any) {
 
   // Fetch data from external API
   const data = await fetchAPI(`/comics`, {
-    populate: 'deep',
+    populate: '*',
     'sort[0]': sort ? `releaseDate:${sort}` : 'releaseDate:desc',
     'filters[keywords][$contains]': q,
     'pagination[pageSize]': 5,

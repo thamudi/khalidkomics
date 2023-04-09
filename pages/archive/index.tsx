@@ -53,7 +53,7 @@ export async function getStaticProps({ locale }: any) {
       populate: ['deep'],
     }),
     fetchAPI('/archives', {
-      populate: ['deep'],
+      populate: '*',
       'sort[0]': 'title:desc',
       locale: locale,
     }),

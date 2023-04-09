@@ -109,7 +109,7 @@ const ArchiveList = ({
 export async function getStaticPaths({ locales }: any) {
   // fetch the endpoint all data
   const archives = await fetchAPI(`/archives`, {
-    populate: 'deep',
+    populate: '*',
   });
   const paths = archives.data
     .map((archive: any) =>
@@ -137,7 +137,7 @@ export async function getStaticProps({ params, query, locale }: any) {
       populate: 'deep',
     }),
     fetchAPI(`/comics/`, {
-      populate: 'deep',
+      populate: '*',
       'filters[archive][slug][$eq]': params.slug,
       'sort[0]': 'releaseDate:desc',
       'pagination[pageSize]': 5,
