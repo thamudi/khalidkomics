@@ -108,17 +108,41 @@ const ArchiveList = ({
 ///
 export async function getStaticPaths({ locales }: any) {
   // fetch the endpoint all data
-  const archives = await fetchAPI(`/archives`, {
-    populate: 'deep',
-  });
-  const paths = archives.data
-    .map((archive: any) =>
-      locales.map((locale: string) => ({
-        params: { slug: archive.attributes.slug },
-        locale, // Pass locale here
-      }))
-    )
-    .flat(); // Flatten array to avoid nested arrays
+
+  let paths = [];
+  let page = 1;
+  let hasMore = true;
+
+  /**
+   * This while loop is used to get all the comics "posts" from strapi's api since strapi only returns a maximum of 100 post per page.
+   * So it will loop until it hits a dead end.
+   */
+  while (hasMore) {
+    // fetch the endpoint all data
+    const archives = await fetchAPI(`/archives`, {
+      populate: '*',
+      'pagination[page]': page,
+      'pagination[pageSize]': 100,
+    });
+
+    // check if the response is empty
+    if (archives.data.length === 0) {
+      hasMore = false;
+      // end while loop
+      break;
+    }
+
+    paths = archives.data
+      .map((archive: any) =>
+        locales.map((locale: string) => ({
+          params: { slug: archive.attributes.slug },
+          locale, // Pass locale here
+        }))
+      )
+      .flat(); // Flatten array to avoid nested arrays
+    page++;
+  }
+
   return {
     paths,
     // fallback false means other routes should be 404
@@ -137,7 +161,7 @@ export async function getStaticProps({ params, query, locale }: any) {
       populate: 'deep',
     }),
     fetchAPI(`/comics/`, {
-      populate: 'deep',
+      populate: '*',
       'filters[archive][slug][$eq]': params.slug,
       'sort[0]': 'releaseDate:desc',
       'pagination[pageSize]': 5,

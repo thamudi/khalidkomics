@@ -4,10 +4,8 @@
 }
 
 .overlay {
-  position: fixed;
+  @apply absolute z-10 rounded-2xl;
   background-color: rgba(0, 0, 0, 0.55);
-  z-index: 2;
-  border-radius: 15px;
 }
 
 .overlay-title {
