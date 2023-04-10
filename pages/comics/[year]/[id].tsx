@@ -58,23 +58,45 @@ const Comic = ({ comicSeo, comicData, year, locale }: any) => {
 ///
 export async function getStaticPaths({ locales }: any) {
   // fetch the endpoint all data
-  const comics = await fetchAPI(`/comics`, {
-    populate: '*',
-    locale: 'all',
-  });
 
-  // create an object of params Ids
-  const paths = comics.data
-    .map((comic: any) =>
-      locales.map((locale: string) => ({
-        params: {
-          id: comic.id.toString(),
-          year: comic.attributes.archive.data.attributes.slug,
-        },
-        locale,
-      }))
-    )
-    .flat(); // Flatten array to avoid nested arrays
+  let paths = [];
+  let page = 1;
+  let hasMore = true;
+
+  /**
+   * This while loop is used to get all the comics "posts" from strapi's api since strapi only returns a maximum of 100 post per page.
+   * So it will loop until it hits a dead end.
+   */
+  while (hasMore) {
+    // fetch the data from the api endpoint
+    const comics = await fetchAPI(`/comics`, {
+      populate: '*',
+      'pagination[page]': page,
+      'pagination[pageSize]': 100,
+      locale: 'all',
+    });
+
+    // check if the response is empty
+    if (comics.data.length === 0) {
+      hasMore = false;
+      // end while loop
+      break;
+    }
+
+    // if the check not true then map the comics response to the
+    paths = comics.data
+      .map((comic: any) =>
+        locales.map((locale: string) => ({
+          params: {
+            id: comic.id.toString(),
+            year: comic.attributes.archive.data.attributes.slug,
+          },
+          locale,
+        }))
+      )
+      .flat(); // Flatten array to avoid nested arrays
+    page++;
+  }
 
   return {
     paths,
