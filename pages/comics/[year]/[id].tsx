@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { ComicProp } from '@/interfaces/comic';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import mail from '@/lib/mail';
 
 const Comic = ({ comicSeo, comicData, year, locale }: any) => {
   const [comic, setComic] = useState<ComicProp>(comicData);
@@ -58,8 +59,7 @@ const Comic = ({ comicSeo, comicData, year, locale }: any) => {
 ///
 export async function getStaticPaths({ locales }: any) {
   // fetch the endpoint all data
-
-  let paths = [];
+  let allComics: any = [];
   let page = 1;
   let hasMore = true;
 
@@ -81,22 +81,33 @@ export async function getStaticPaths({ locales }: any) {
       hasMore = false;
       // end while loop
       break;
-    }
+    } else {
+      const filteredComics = comics.data.filter((comic: any) => {
+        if (comic.attributes.archive.data) {
+          return true;
+        } else {
+          console.error(`The following Comic is corrupted: ${comic.id}`);
+          mail(comic.id);
+          return false;
+        }
+      });
 
-    // if the check not true then map the comics response to the
-    paths = comics.data
-      .map((comic: any) =>
-        locales.map((locale: string) => ({
-          params: {
-            id: comic.id.toString(),
-            year: comic.attributes.archive.data.attributes.slug,
-          },
-          locale,
-        }))
-      )
-      .flat(); // Flatten array to avoid nested arrays
-    page++;
+      allComics = [...allComics, ...filteredComics];
+      page++;
+    }
   }
+
+  const paths = allComics
+    .map((comic: any) =>
+      locales.map((locale: string) => ({
+        params: {
+          id: comic.id.toString(),
+          year: comic.attributes.archive.data.attributes.slug,
+        },
+        locale,
+      }))
+    )
+    .flat(); // Flatten array to avoid nested arrays
 
   return {
     paths,

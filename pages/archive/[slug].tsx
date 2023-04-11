@@ -109,7 +109,7 @@ const ArchiveList = ({
 export async function getStaticPaths({ locales }: any) {
   // fetch the endpoint all data
 
-  let paths = [];
+  let allArchive: any = [];
   let page = 1;
   let hasMore = true;
 
@@ -130,18 +130,19 @@ export async function getStaticPaths({ locales }: any) {
       hasMore = false;
       // end while loop
       break;
+    } else {
+      allArchive = [...allArchive, ...archives.data];
+      page++;
     }
-
-    paths = archives.data
-      .map((archive: any) =>
-        locales.map((locale: string) => ({
-          params: { slug: archive.attributes.slug },
-          locale, // Pass locale here
-        }))
-      )
-      .flat(); // Flatten array to avoid nested arrays
-    page++;
   }
+  const paths = allArchive
+    .map((archive: any) =>
+      locales.map((locale: string) => ({
+        params: { slug: archive.attributes.slug },
+        locale, // Pass locale here
+      }))
+    )
+    .flat(); // Flatten array to avoid nested arrays
 
   return {
     paths,
