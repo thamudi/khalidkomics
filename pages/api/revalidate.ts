@@ -13,18 +13,26 @@ export default async function handler(
     // this should be the actual path not a rewritten path
 
     const model = req.body.model;
-    const slug = req.body.entry.slug;
+
     let pathToRevalidate = '';
+    const { locale } = req.body.entry;
 
     switch (model) {
       case 'about':
-        pathToRevalidate = `about`;
+        pathToRevalidate = `/${locale}/about`;
         break;
       case 'archive':
-        pathToRevalidate = `/archive/`;
+        pathToRevalidate = `/archive`;
+        // this code snippet was added like this since the archive have no localization on the API part.
+        // For now this works.
+        console.log('Path to revalidate: ', pathToRevalidate);
+        await res.revalidate(pathToRevalidate);
+        pathToRevalidate = `/ar/archive`;
         break;
-      case 'comics':
-        pathToRevalidate = `/comics/${slug}`;
+      case 'comic':
+        const { id } = req.body.entry;
+        const { slug } = req.body.entry?.archive;
+        pathToRevalidate = `/${locale}/comics/${slug}/${id}`;
         break;
       default:
         break;
