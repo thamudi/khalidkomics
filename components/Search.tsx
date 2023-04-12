@@ -17,7 +17,10 @@ const Search = ({ placeholderText }: any) => {
       searchtext: { value: string };
     };
     router.push(
-      LinkCreator.toQuery({ q: target.searchtext.value }, '/archive/search')
+      LinkCreator.toQuery(
+        { q: target.searchtext.value.toLocaleLowerCase() },
+        '/archive/search'
+      )
     );
   };
   return (

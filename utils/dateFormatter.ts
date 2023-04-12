@@ -1,7 +1,7 @@
 export const formatDate = (date: string) => {
   const newDate = new Date(date);
-  const [day, month, year] = [
-    newDate.getDay(),
+  const day = date.split('-')[2];
+  const [month, year] = [
     newDate.toLocaleString('en-US', { month: 'short' }),
     newDate.getFullYear(),
   ];
