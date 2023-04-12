@@ -62,7 +62,7 @@ export async function getStaticPaths({ locales }: any) {
   let allComics: any = [];
   let page = 1;
   let hasMore = true;
-
+  
   /**
    * This while loop is used to get all the comics "posts" from strapi's api since strapi only returns a maximum of 100 post per page.
    * So it will loop until it hits a dead end.
