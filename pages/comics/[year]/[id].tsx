@@ -7,11 +7,12 @@ import { ComicProp } from '@/interfaces/comic';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import mail from '@/lib/mail';
+import Image from 'next/image';
+import Loader from '@/components/Loader';
 
 const Comic = ({ comicSeo, comicData, year, locale }: any) => {
   const [comic, setComic] = useState<ComicProp>(comicData);
   const [isLoading, setLoading] = useState<boolean>(false);
-  const { t } = useTranslation('common');
   /**
    * A function that fetches the next comic when invoked
    *
@@ -40,7 +41,7 @@ const Comic = ({ comicSeo, comicData, year, locale }: any) => {
         {comicSeo?.attributes && <Seo seo={comicSeo.attributes.seo} />}
         {isLoading ? (
           <>
-            <p>{t('loading')}</p>
+            <Loader />
           </>
         ) : (
           <>
