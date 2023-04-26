@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'next-i18next';
+import Loader from '@/components/Loader';
 
 const ArchiveList = ({
   archivesSeo,
@@ -62,9 +63,7 @@ const ArchiveList = ({
         <Search placeholderText={`Search for comics in ${slug}`} />
         <Sorting fetchComic={fetchComic} />
         {isLoading ? (
-          <>
-            <p>{t('loading')}</p>
-          </>
+          <Loader />
         ) : (
           <>
             <div className="comics-list-container">

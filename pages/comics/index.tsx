@@ -8,13 +8,14 @@ import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
+import Image from 'next/image';
+import Loader from '@/components/Loader';
 
 const Comics = ({ comicSeo, localeProp }: any) => {
   const [comics, setComic] = useState<ComicProp>();
   const [isLoading, setLoading] = useState<boolean>(false);
   const [locale, setLocale] = useState<string | undefined>(localeProp);
   const router = useRouter();
-  const { t } = useTranslation('common');
   /**
    * A function that fetches the next comic when invoked
    *
@@ -49,9 +50,7 @@ const Comics = ({ comicSeo, localeProp }: any) => {
       <div className="flex flex-col items-center">
         {comicSeo?.attributes && <Seo seo={comicSeo.attributes.seo} />}
         {isLoading ? (
-          <>
-            <p>{t('loading')}</p>
-          </>
+          <Loader />
         ) : (
           <>
             {comics?.data.length && (
