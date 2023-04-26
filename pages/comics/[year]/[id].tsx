@@ -7,7 +7,6 @@ import { ComicProp } from '@/interfaces/comic';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import mail from '@/lib/mail';
-import Image from 'next/image';
 import Loader from '@/components/Loader';
 
 const Comic = ({ comicSeo, comicData, year, locale }: any) => {
