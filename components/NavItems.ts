@@ -1,6 +1,13 @@
 const NavItems: any = {
   en: [
     {
+      src: '/img/nav/icons_home_en.svg',
+      alt: 'home',
+      link: '/comics',
+      text: 'home',
+      component: false,
+    },
+    {
       src: '/img/nav/icons_archive_en.svg',
       alt: 'archive comics',
       link: '/archive',
@@ -30,6 +37,13 @@ const NavItems: any = {
     },
   ],
   ar: [
+    {
+      src: '/img/nav/icons_home_ar.svg',
+      alt: 'home',
+      link: '/comics',
+      text: 'الرئيسة',
+      component: false,
+    },
     {
       src: '/img/nav/icons_archive_ar.svg',
       alt: 'archive comics',
