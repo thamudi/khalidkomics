@@ -146,7 +146,7 @@ export async function getStaticPaths({ locales }: any) {
   return {
     paths,
     // fallback false means other routes should be 404
-    fallback: false,
+    fallback: true,
   };
 }
 
